@@ -1,0 +1,12 @@
+<h3>Posts ({{ posts.length }})</h3>
+
+<div class="posts">
+  <div class="post" *ngFor="let post of posts">
+    <img
+      src="https://4.bp.blogspot.com/-rTW8Zllh4TM/WAxaR7L6pkI/AAAAAAAAO-o/jE3YbAOGSTkD1M1Jmzvp0gxhP81gVHWUQCLcB/s1600/Post.png"
+      alt=""
+    />
+    <span class="title">{{ post.title }}</span>
+    <span class="body">{{ post.body }}</span>
+  </div>
+</div>

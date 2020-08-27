@@ -1,0 +1,35 @@
+.posts {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  cursor: pointer;
+
+  .post {
+    width: 300px;
+    min-height: 300px;
+    border: 1px solid lightgrey;
+    margin-bottom: 13px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    img {
+      max-width: 100%;
+    }
+
+    .title {
+      font-size: 14px;
+      font-weight: 600;
+      color: slategray;
+      text-align: justify;
+      margin: 5px 0;
+    }
+
+    .body {
+      font-size: 12px;
+      text-align: justify;
+    }
+    &:hover{
+      box-shadow: 0 8px 6px -6px black
+    }
+  }
+}
