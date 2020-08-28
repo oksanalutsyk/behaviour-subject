@@ -1,0 +1,62 @@
+const express = require('express');
+const router = express.Router();
+const Post = require('../models/Post')
+
+
+//відслідкування url 
+
+// router.get('/posts', (req, res) => {
+//     res.send('Posts')
+// })
+router.get('/edit', (req, res) => {
+    res.send('Edit posts')
+})
+router.get('/posts', async (req, res) => {
+    const { post } = req.query;
+    let posts;
+    try {
+        // check if object query is not empty
+        if (!(Object.entries(req.query).length === 0 && req.query.constructor === Object)) {
+            posts = await Post.find({ post: { $in: post.split(',') } });
+        } else {
+            posts = await Post.find();
+        }
+
+        if (!posts || posts.length === 0) {
+            throw { message: 'Post is not found' };
+        }
+        res.status(200).send(posts);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+router.post('/posts', async (req, res) => {
+    const { title, body, img } = req.body;
+    try{
+        const newPost = new Post({
+            title,
+            body,
+            img
+        });
+        await newPost.save();
+        res.status(200).send(newPost);
+    } catch (err){
+        res.status(500).send(err);
+    }
+})
+
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    try{
+        const response = await Post.findByIdAndDelete({ _id:id });
+        if(!response){
+            return res.status(404).send('Post does not exist!');
+        }
+        // res.status(200).send('Post succesfuly deleted');
+    } catch (err){
+        res.status(400).send(err);
+    }
+})
+
+module.exports = router;
