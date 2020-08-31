@@ -1,12 +1,12 @@
 <h3> Selected post id ({{id}})</h3>
+<h3> Selected post title ({{title}})</h3>
 <div class="posts" *ngIf="posts$ | async as posts">
-  <!-- <div class="post" *ngFor="let post of posts"> -->
-    <div class="post" *ngFor="let post of posts" id="post.id" (click)="onSelected(post.id)">
+    <div class="post" *ngFor="let post of posts" id="post.id" (click)="onSelected(post)">
     <img
       src="https://4.bp.blogspot.com/-rTW8Zllh4TM/WAxaR7L6pkI/AAAAAAAAO-o/jE3YbAOGSTkD1M1Jmzvp0gxhP81gVHWUQCLcB/s1600/Post.png"
       alt=""
     />
-    <span class="title">{{ post.title }}</span>
+    <span class="title">{{ post.title }} ({{post.id}})</span>
     <span class="body">{{ post.body }}</span>
   </div>
 </div>

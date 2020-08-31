@@ -16,14 +16,11 @@ import { PostsInterfaces } from '../post.interface';
   styleUrls: ['./posts.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostsComponent implements OnInit, OnDestroy {
-  myForm: FormGroup;
-  posts: any;
+export class PostsComponent  {
   id: any;
-  private subscription: Subscription;
+  title: any;
 
   constructor(private postServise: PostsService) {
-    this.subscription = new Subscription();
   }
 
   posts$ = this.postServise.posts$.pipe(
@@ -33,24 +30,11 @@ export class PostsComponent implements OnInit, OnDestroy {
     })
   );
 
-  ngOnInit() {
-    this.getQuery();
+ 
+  onSelected(post): void {
+    this.postServise.selectedPostChanged(post.id);
+    this.id = post.id;
+    this.title = post.title;
   }
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  getQuery() {
-    // const postsStream$ = this.postServise.query$.subscribe(
-    //   (item) => (this.posts = item),
-    //   (err) => console.log(err)
-    // );
-    // // console.log(this.posts);
-    // this.subscription.add(postsStream$);
-  }
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  onSelected(postId: string): void {
-    this.postServise.selectedPostChanged(postId);
-    this.id = postId;
-  }
-  ngOnDestroy() {
-    // this.subscription.unsubscribe();
-  }
+
 }
