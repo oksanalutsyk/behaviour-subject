@@ -12,6 +12,7 @@
     padding: 15px;
     display: flex;
     flex-direction: column;
+
     img {
       max-width: 100%;
     }
@@ -28,12 +29,14 @@
       font-size: 12px;
       text-align: justify;
     }
-    .buttons{
+
+    .buttons {
       margin-top: 10px;
       display: flex;
       justify-content: space-around;
     }
-    &:hover{
+
+    &:hover {
       box-shadow: 0 8px 6px -6px black
     }
   }

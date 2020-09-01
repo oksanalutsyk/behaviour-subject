@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { PostInterface } from '../interfaces/post.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -17,22 +18,18 @@ export class PostsService {
   getPosts(): Observable<any> {
     return this.http.get(`${this.url}`);
   }
-  getPostById(id:string):Observable<any> {
-    return this.http.get(`${this.url}/${id}`)
+  getPostById(id: string): Observable<PostInterface[]> {
+    return this.http.get<PostInterface[]>(`${this.url}/${id}`);
   }
-  deletePost(id: string): Observable<any> {
-    return this.http.delete(`${this.url}/${id}`);
+  deletePost(id: string): Observable<PostInterface[]> {
+    return this.http.delete<PostInterface[]>(`${this.url}/${id}`);
   }
-  updatePost(id: string, post: any): Observable<any> {
-    return this.http.patch(`${this.url}/update/${id}`, post);
+  updatePost(id: string, post: any): Observable<PostInterface[]> {
+    return this.http.patch<PostInterface[]>(`${this.url}/update/${id}`, post);
   }
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   changeQueryParameter(query: any) {
     this._navItemSource.next(query);
   }
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-  search(query): Observable<any> {
-    return this.http.get(`${this.url}${query}`, query);
-  }
 }

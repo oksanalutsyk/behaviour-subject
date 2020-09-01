@@ -5,9 +5,6 @@ const Post = require('../models/Post')
 
 //відслідкування url 
 
-// router.get('/posts', (req, res) => {
-//     res.send('Posts')
-// })
 router.get('/edit', (req, res) => {
     res.send('Edit posts')
 })
@@ -66,7 +63,7 @@ router.delete('/posts/:id', async (req, res) => {
         if (!response) {
             return res.status(404).send('Post does not exist!');
         }
-        res.status(200).send('Post succesfuly deleted');
+        // res.status(200).send('Post succesfuly deleted');
     } catch (err) {
         res.status(400).send(err);
     }
@@ -75,7 +72,6 @@ router.delete('/posts/:id', async (req, res) => {
 router.patch('/posts/update/:id', async (req, res) => {
     try {
         const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body)
-        // await Post.save()
         res.status(200).send(updatedPost)
         if (!updatedPost) {
             return res.status(404).send('Post does not update!');

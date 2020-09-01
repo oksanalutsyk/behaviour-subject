@@ -15,16 +15,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 //components
 import { AppComponent } from './app.component';
 import { PostsComponent } from './posts/posts.component';
-import { SearchFieldComponent } from './search-field/search-field.component';
 import { EditPostComponent } from './edit-post/edit-post.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PostsComponent,
-    SearchFieldComponent,
-    EditPostComponent,
-  ],
+  declarations: [AppComponent, PostsComponent, EditPostComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
