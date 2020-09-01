@@ -1,4 +1,5 @@
 <h3>Posts ({{ posts.length }})</h3>
+<h3>Title {{title}}</h3>
 <div class="posts">
   <div class="post" *ngFor="let post of posts" id="{{ post._id }}">
     <img
@@ -20,6 +21,7 @@
         mat-mini-fab
         color="primary"
         aria-label="Example icon button with a delete icon"
+        (click)="openDialog(post)"
       >
         <mat-icon>edit</mat-icon>
       </button>

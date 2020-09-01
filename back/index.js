@@ -23,7 +23,7 @@ app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')))
 
 // підключення до БД
-mongoose.connect(config.db, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(config.db, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
 mongoose.connection.on('connected', () => {
     console.log('Succesfuly connection')
@@ -36,7 +36,7 @@ mongoose.connection.on('error', (err) => {
 // app.get('/', (req, res) => {
 //     res.send('Головна сторінка сайту')
 // })
- 
+
 app.use(routes)
 
 app.listen(port, () => {

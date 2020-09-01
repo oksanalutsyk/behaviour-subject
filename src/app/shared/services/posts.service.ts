@@ -10,16 +10,21 @@ export class PostsService {
   private _navItemSource = new BehaviorSubject<any>('');
   query$ = this._navItemSource.asObservable();
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  private url = 'http://localhost:3000';
+  private url = 'http://localhost:3000/posts';
 
   constructor(private http: HttpClient) {}
 
-  
   getPosts(): Observable<any> {
-    return this.http.get(`${this.url}/posts`);
+    return this.http.get(`${this.url}`);
   }
-  deletePost(id:string): Observable<any> {
+  getPostById(id:string):Observable<any> {
+    return this.http.get(`${this.url}/${id}`)
+  }
+  deletePost(id: string): Observable<any> {
     return this.http.delete(`${this.url}/${id}`);
+  }
+  updatePost(id: string, post: any): Observable<any> {
+    return this.http.patch(`${this.url}/update/${id}`, post);
   }
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   changeQueryParameter(query: any) {
@@ -27,9 +32,7 @@ export class PostsService {
   }
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-
-
   search(query): Observable<any> {
-    return this.http.get(`${this.url}/posts${query}`, query);
+    return this.http.get(`${this.url}${query}`, query);
   }
 }

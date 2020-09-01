@@ -10,14 +10,21 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 
 //components
 import { AppComponent } from './app.component';
 import { PostsComponent } from './posts/posts.component';
 import { SearchFieldComponent } from './search-field/search-field.component';
+import { EditPostComponent } from './edit-post/edit-post.component';
 
 @NgModule({
-  declarations: [AppComponent, PostsComponent, SearchFieldComponent],
+  declarations: [
+    AppComponent,
+    PostsComponent,
+    SearchFieldComponent,
+    EditPostComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -28,7 +35,8 @@ import { SearchFieldComponent } from './search-field/search-field.component';
     MatInputModule,
     HttpClientModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

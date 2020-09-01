@@ -31,9 +31,22 @@ router.get('/posts', async (req, res) => {
     }
 });
 
+router.get('/posts/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const post = await Post.findById(id);
+        if (!post) {
+            return res.status(404).send('Post does not exist!');
+        }
+        res.status(200).send(post);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+})
+
 router.post('/posts', async (req, res) => {
     const { title, body, img } = req.body;
-    try{
+    try {
         const newPost = new Post({
             title,
             body,
@@ -41,21 +54,34 @@ router.post('/posts', async (req, res) => {
         });
         await newPost.save();
         res.status(200).send(newPost);
-    } catch (err){
+    } catch (err) {
         res.status(500).send(err);
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/posts/:id', async (req, res) => {
     const { id } = req.params;
-    try{
-        const response = await Post.findByIdAndDelete({ _id:id });
-        if(!response){
+    try {
+        const response = await Post.findByIdAndDelete({ _id: id });
+        if (!response) {
             return res.status(404).send('Post does not exist!');
         }
-        // res.status(200).send('Post succesfuly deleted');
-    } catch (err){
+        res.status(200).send('Post succesfuly deleted');
+    } catch (err) {
         res.status(400).send(err);
+    }
+})
+
+router.patch('/posts/update/:id', async (req, res) => {
+    try {
+        const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body)
+        // await Post.save()
+        res.status(200).send(updatedPost)
+        if (!updatedPost) {
+            return res.status(404).send('Post does not update!');
+        }
+    } catch (err) {
+        res.status(500).send(err)
     }
 })
 

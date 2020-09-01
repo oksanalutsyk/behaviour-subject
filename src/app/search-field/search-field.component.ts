@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { PostsService } from '../posts.service';
+import { PostsService } from '../shared/services/posts.service';
 
 @Component({
   selector: 'app-search-field',
@@ -33,6 +33,7 @@ export class SearchFieldComponent implements OnInit {
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       this.postServise.changeQueryParameter(data);
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    });
+    }
+    );
   }
 }

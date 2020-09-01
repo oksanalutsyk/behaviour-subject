@@ -1,0 +1,32 @@
+<h3>Edit post:</h3>
+
+<form>
+  <mat-form-field>
+    <mat-label>Post Title</mat-label>
+    <input
+      matInput
+      placeholder="write title here..."
+      [(ngModel)]="data.title"
+      name="title"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Post Description</mat-label>
+    <input
+      matInput
+      placeholder="write description here..."
+      [(ngModel)]="data.body"
+      name="body"
+    />
+  </mat-form-field>
+  <div mat-dialog-actions>
+    <button mat-button (click)="close()">Cancel</button>
+    <button
+      mat-button
+      [mat-dialog-close]="{ title: data.title, body: data.body }"
+      cdkFocusInitial
+    >
+      Save
+    </button>
+  </div>
+</form>
