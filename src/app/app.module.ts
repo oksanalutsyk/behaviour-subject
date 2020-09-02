@@ -16,9 +16,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AppComponent } from './app.component';
 import { PostsComponent } from './posts/posts.component';
 import { EditPostComponent } from './edit-post/edit-post.component';
+import { AddPostComponent } from './add-post/add-post.component';
 
 @NgModule({
-  declarations: [AppComponent, PostsComponent, EditPostComponent],
+  declarations: [AppComponent, PostsComponent, EditPostComponent, AddPostComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

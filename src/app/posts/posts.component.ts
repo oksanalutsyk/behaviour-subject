@@ -6,6 +6,7 @@ import { switchMap } from 'rxjs/operators';
 import { EditPostComponent } from '../edit-post/edit-post.component';
 import { PostsService } from '../shared/services/posts.service';
 import { PostInterface } from '../shared/interfaces/post.interface';
+import { AddPostComponent } from '../add-post/add-post.component';
 
 @Component({
   selector: 'app-posts',
@@ -53,7 +54,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.getPosts();
   }
 
-  openDialog(post): void {
+  openEditDialog(post): void {
     const dialogRef = this.dialog.open(EditPostComponent, {
       width: '1000px',
       data: { title: post.title, body: post.body, id: post._id },
@@ -63,6 +64,27 @@ export class PostsComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((data) => {
           return this.postServise.updatePost(post._id, data);
+        })
+      )
+      .subscribe((data) => {
+        console.log('update', data);
+        this.getPosts();
+      });
+    this.subscription.add(postsStream$);
+  }
+
+  openAddDialog(): void {
+    const dialogRef = this.dialog.open(AddPostComponent, {
+      width: '1000px',
+      data: { title: this.title, body: this.body },
+    });
+
+    const postsStream$ = dialogRef
+      .afterClosed()
+      .pipe(
+        switchMap((data) => {
+          console.log('add', data);
+          return this.postServise.addNewPost(data);
         })
       )
       .subscribe((data) => {
