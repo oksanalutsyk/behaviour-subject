@@ -1,5 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import {
+  MAT_SNACK_BAR_DATA,
+  MatSnackBarRef,
+} from '@angular/material/snack-bar';
 import { PostInterface } from 'src/app/shared/interfaces/post.interface';
 
 @Component({
@@ -8,8 +11,12 @@ import { PostInterface } from 'src/app/shared/interfaces/post.interface';
   styleUrls: ['./success-add.component.scss'],
 })
 export class SuccessAddComponent implements OnInit {
-
-  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) {}
+  
+  constructor(
+    @Inject(MAT_SNACK_BAR_DATA) public data: any,
+    //to close snack-bar
+    public snackBarRef: MatSnackBarRef<any>
+  ) {}
 
   ngOnInit(): void {}
 }
