@@ -1,12 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { EditPostComponent } from '../edit-post/edit-post.component';
 import { PostsService } from '../shared/services/posts.service';
 import { PostInterface } from '../shared/interfaces/post.interface';
 import { AddPostComponent } from '../add-post/add-post.component';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
+import { SuccessAddComponent } from '../snack-bar/success-add/success-add.component';
 
 @Component({
   selector: 'app-posts',
@@ -20,10 +26,19 @@ export class PostsComponent implements OnInit, OnDestroy {
   body: string;
 
   page: number = 1;
+  //snack-bar
+  durationInSeconds = 5;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+  action = 'deleted';
 
   private subscription: Subscription;
 
-  constructor(private postServise: PostsService, public dialog: MatDialog) {
+  constructor(
+    private postServise: PostsService,
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
+  ) {
     this.subscription = new Subscription();
   }
 
@@ -31,7 +46,6 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.getPosts();
   }
 
-  
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   getPosts(): void {
@@ -51,10 +65,19 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   deletePost(id): void {
     const postsStream$ = this.postServise.deletePost(id).subscribe((data) => {
-      console.log(data);
+      this.openSnackBar(data);
     });
     this.subscription.add(postsStream$);
     this.getPosts();
+  }
+
+  openSnackBar(data) {
+    this._snackBar.openFromComponent(SuccessAddComponent, {
+      duration: this.durationInSeconds * 1000,
+      data: { data:data, message: this.action },
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   openEditDialog(post): void {
@@ -66,7 +89,10 @@ export class PostsComponent implements OnInit, OnDestroy {
       .afterClosed()
       .pipe(
         switchMap((data) => {
-          return this.postServise.updatePost(post._id, data);
+          if (data !== undefined) {
+            return this.postServise.updatePost(post._id, data);
+          }
+          return [];
         })
       )
       .subscribe((data) => {
@@ -81,13 +107,15 @@ export class PostsComponent implements OnInit, OnDestroy {
       width: '1000px',
       data: { title: this.title, body: this.body },
     });
-
     const postsStream$ = dialogRef
       .afterClosed()
       .pipe(
         switchMap((data) => {
-          console.log('add', data);
-          return this.postServise.addNewPost(data);
+          if (data !== undefined) {
+            console.log('add', data);
+            return this.postServise.addNewPost(data);
+          }
+          return [];
         })
       )
       .subscribe((data) => {
@@ -96,8 +124,6 @@ export class PostsComponent implements OnInit, OnDestroy {
       });
     this.subscription.add(postsStream$);
   }
-
-
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

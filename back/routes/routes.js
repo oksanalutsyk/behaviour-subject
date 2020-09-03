@@ -60,10 +60,11 @@ router.delete('/posts/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const response = await Post.findByIdAndDelete({ _id: id });
+        res.send(response);
+
         if (!response) {
             return res.status(404).send('Post does not exist!');
         }
-        // res.status(200).send('Post succesfuly deleted');
     } catch (err) {
         res.status(400).send(err);
     }

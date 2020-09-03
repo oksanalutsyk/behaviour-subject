@@ -55,3 +55,11 @@ a {
     }
   }
 }
+
+.cdk-global-overlay-wrapper {
+  .mat-snack-bar-container {
+    color: slategray;
+    background: #cbebd3;
+    box-shadow: none;
+  }
+}
