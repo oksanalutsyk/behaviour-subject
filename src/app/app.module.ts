@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 //components
 import { AppComponent } from './app.component';
@@ -18,8 +19,16 @@ import { PostsComponent } from './posts/posts.component';
 import { EditPostComponent } from './edit-post/edit-post.component';
 import { AddPostComponent } from './add-post/add-post.component';
 
+import {NgxPaginationModule} from 'ngx-pagination';
+
+
 @NgModule({
-  declarations: [AppComponent, PostsComponent, EditPostComponent, AddPostComponent],
+  declarations: [
+    AppComponent,
+    PostsComponent,
+    EditPostComponent,
+    AddPostComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -32,6 +41,8 @@ import { AddPostComponent } from './add-post/add-post.component';
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
+    MatTooltipModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent],

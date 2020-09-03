@@ -1,9 +1,11 @@
+.add-button {
+  margin-top: 1rem;
+}
 .posts {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   cursor: pointer;
-
   .post {
     width: 300px;
     min-height: 300px;

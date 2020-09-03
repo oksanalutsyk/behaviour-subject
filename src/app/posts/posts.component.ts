@@ -19,6 +19,8 @@ export class PostsComponent implements OnInit, OnDestroy {
   title: string;
   body: string;
 
+  page: number = 1;
+
   private subscription: Subscription;
 
   constructor(private postServise: PostsService, public dialog: MatDialog) {
@@ -29,6 +31,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.getPosts();
   }
 
+  
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   getPosts(): void {
@@ -93,6 +96,8 @@ export class PostsComponent implements OnInit, OnDestroy {
       });
     this.subscription.add(postsStream$);
   }
+
+
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
