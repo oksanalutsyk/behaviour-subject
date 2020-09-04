@@ -19,11 +19,19 @@
       name="body"
     />
   </mat-form-field>
+  <mat-checkbox class="example-margin" [(ngModel)]="data.checked" name="checked"
+    >Check to add sticker</mat-checkbox
+  >
+
   <div mat-dialog-actions>
     <button mat-button (click)="close()">Cancel</button>
     <button
       mat-button
-      [mat-dialog-close]="{ title: data.title, body: data.body }"
+      [mat-dialog-close]="{
+        title: data.title,
+        body: data.body,
+        checked: data.checked
+      }"
       cdkFocusInitial
       (click)="openSnackBar()"
     >

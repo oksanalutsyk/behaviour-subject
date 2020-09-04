@@ -12,6 +12,9 @@ const PostScheme = mongoose.Schema({
     },
     img: {
         type: String
+    },
+    checked: {
+        type: Boolean
     }
 })
 

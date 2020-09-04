@@ -13,7 +13,7 @@
   <div
     class="post"
     *ngFor="
-      let post of posts | paginate: { itemsPerPage: 6, currentPage: page}
+      let post of posts | paginate: { itemsPerPage: 6, currentPage: page }
     "
     id="{{ post._id }}"
   >
@@ -45,8 +45,12 @@
         <mat-icon>edit</mat-icon>
       </button>
     </div>
+    <span *ngIf="post.checked" class="sticker"><mat-icon>check</mat-icon></span>
   </div>
 </div>
 <div class="pagination">
-  <pagination-controls (pageChange)="page = $event" maxSize="5"></pagination-controls>
+  <pagination-controls
+    (pageChange)="page = $event"
+    maxSize="5"
+  ></pagination-controls>
 </div>

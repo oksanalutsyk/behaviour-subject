@@ -23,6 +23,7 @@ router.get('/posts', async (req, res) => {
             throw { message: 'Post is not found' };
         }
         res.status(200).send(posts);
+
     } catch (err) {
         res.status(400).send(err);
     }
@@ -42,15 +43,18 @@ router.get('/posts/:id', async (req, res) => {
 })
 
 router.post('/posts', async (req, res) => {
-    const { title, body, img } = req.body;
+    const { title, body, img, checked } = req.body;
     try {
         const newPost = new Post({
             title,
             body,
-            img
+            img,
+            checked
         });
         await newPost.save();
         res.status(200).send(newPost);
+        console.log(newPost)
+
     } catch (err) {
         res.status(500).send(err);
     }

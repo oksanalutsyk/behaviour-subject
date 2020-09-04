@@ -22,6 +22,8 @@ export class AddPostComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   action = 'added';
 
+  checked = false;
+
   constructor(
     public dialogRef: MatDialogRef<AddPostComponent>,
     @Inject(MAT_DIALOG_DATA) public data: PostInterface,

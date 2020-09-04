@@ -1,11 +1,13 @@
 .add-button {
   margin-top: 1rem;
 }
+
 .posts {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   cursor: pointer;
+
   .post {
     width: 300px;
     min-height: 300px;
@@ -14,6 +16,7 @@
     padding: 15px;
     display: flex;
     flex-direction: column;
+    position: relative;
 
     img {
       max-width: 100%;
@@ -41,5 +44,16 @@
     &:hover {
       box-shadow: 0 8px 6px -6px black
     }
+  }
+
+  .sticker {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: green;
+    display: flex;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 100%;
   }
 }

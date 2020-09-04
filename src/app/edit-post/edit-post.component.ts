@@ -6,7 +6,11 @@ import {
 } from '@angular/material/dialog';
 import { PostsService } from '../shared/services/posts.service';
 import { PostInterface } from '../shared/interfaces/post.interface';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 import { SuccessAddComponent } from '../snack-bar/success-add/success-add.component';
 
 @Component({
@@ -15,15 +19,16 @@ import { SuccessAddComponent } from '../snack-bar/success-add/success-add.compon
   styleUrls: ['./edit-post.component.scss'],
 })
 export class EditPostComponent implements OnInit {
-
   durationInSeconds = 5;
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   action = 'edited';
-  
+
+  checked = false;
+
   constructor(
     public dialogRef: MatDialogRef<EditPostComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: PostInterface,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private postService: PostsService,
     private _snackBar: MatSnackBar
   ) {}
@@ -31,6 +36,7 @@ export class EditPostComponent implements OnInit {
   ngOnInit(): void {
     this.postService.getPostById(this.data.id).subscribe((data) => {
       console.log(data);
+      this.data = data;
     });
   }
 
@@ -41,7 +47,7 @@ export class EditPostComponent implements OnInit {
   openSnackBar() {
     this._snackBar.openFromComponent(SuccessAddComponent, {
       duration: this.durationInSeconds * 1000,
-      data: { data: this.data, message: this.action },
+      data: { data: this.data, message: this.action, checked: this.checked },
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
     });

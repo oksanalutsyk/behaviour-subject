@@ -32,11 +32,6 @@ mongoose.connection.on('error', (err) => {
     console.log('Unsuccesfuly connection', err)
 })
 
-//відслідкування url 
-// app.get('/', (req, res) => {
-//     res.send('Головна сторінка сайту')
-// })
-
 app.use(routes)
 
 app.listen(port, () => {

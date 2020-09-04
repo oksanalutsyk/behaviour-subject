@@ -24,6 +24,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   posts: PostInterface[];
   title: string;
   body: string;
+  checked: boolean;
 
   page: number = 1;
   //snack-bar
@@ -83,7 +84,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   openEditDialog(post): void {
     const dialogRef = this.dialog.open(EditPostComponent, {
       width: '1000px',
-      data: { title: post.title, body: post.body, id: post._id },
+      data: { title: post.title, body: post.body, id: post._id, checked:this.checked },
     });
     const postsStream$ = dialogRef
       .afterClosed()
@@ -105,7 +106,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   openAddDialog(): void {
     const dialogRef = this.dialog.open(AddPostComponent, {
       width: '1000px',
-      data: { title: this.title, body: this.body },
+      data: { title: this.title, body: this.body, checked:this.checked },
     });
     const postsStream$ = dialogRef
       .afterClosed()
