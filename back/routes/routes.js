@@ -53,7 +53,6 @@ router.post('/posts', async (req, res) => {
         });
         await newPost.save();
         res.status(200).send(newPost);
-        console.log(newPost)
 
     } catch (err) {
         res.status(500).send(err);

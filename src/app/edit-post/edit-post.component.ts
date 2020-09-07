@@ -35,7 +35,6 @@ export class EditPostComponent implements OnInit {
 
   ngOnInit(): void {
     this.postService.getPostById(this.data.id).subscribe((data) => {
-      console.log(data);
       this.data = data;
     });
   }

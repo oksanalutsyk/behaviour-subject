@@ -43,7 +43,6 @@ export class AddPostComponent implements OnInit {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
     });
-    console.log(this.data);
   }
 
   onFileChanged(event) {
