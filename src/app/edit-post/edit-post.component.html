@@ -19,10 +19,14 @@
       name="body"
     />
   </mat-form-field>
+  <div class="image">
+    <input type="file" (change)="onFileChanged($event)" />
+    <img src="{{ data.image }}" alt="" />
+  </div>
+
   <mat-checkbox class="example-margin" [(ngModel)]="data.checked" name="checked"
     >Check to add sticker</mat-checkbox
   >
-
   <div mat-dialog-actions>
     <button mat-button (click)="close()">Cancel</button>
     <button
@@ -30,7 +34,8 @@
       [mat-dialog-close]="{
         title: data.title,
         body: data.body,
-        checked: data.checked
+        checked: data.checked,
+        image: data.image
       }"
       cdkFocusInitial
       (click)="openSnackBar()"

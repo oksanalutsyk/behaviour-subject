@@ -1,8 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -23,6 +20,9 @@ export class AddPostComponent implements OnInit {
   action = 'added';
 
   checked = false;
+  image: string;
+
+  imageSrc: string;
 
   constructor(
     public dialogRef: MatDialogRef<AddPostComponent>,
@@ -39,9 +39,24 @@ export class AddPostComponent implements OnInit {
   openSnackBar() {
     this._snackBar.openFromComponent(SuccessAddComponent, {
       duration: this.durationInSeconds * 1000,
-      data: { data: this.data, message: this.action },
+      data: { data: this.data, message: this.action, imageUrl: this.imageSrc },
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
     });
+    console.log(this.data);
+  }
+
+  onFileChanged(event) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.imageSrc = reader.result as string;
+        this.data.image = this.imageSrc;
+
+      };
+    }
   }
 }

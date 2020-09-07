@@ -5,9 +5,9 @@ const Post = require('../models/Post')
 
 //відслідкування url 
 
-router.get('/edit', (req, res) => {
-    res.send('Edit posts')
-})
+// router.get('/edit', (req, res) => {
+//     res.send('Edit posts')
+// })
 router.get('/posts', async (req, res) => {
     const { post } = req.query;
     let posts;
@@ -43,12 +43,12 @@ router.get('/posts/:id', async (req, res) => {
 })
 
 router.post('/posts', async (req, res) => {
-    const { title, body, img, checked } = req.body;
+    const { title, body, image, checked } = req.body;
     try {
         const newPost = new Post({
             title,
             body,
-            img,
+            image,
             checked
         });
         await newPost.save();

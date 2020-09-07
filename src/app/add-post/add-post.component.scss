@@ -1,5 +1,14 @@
 form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+}
+
+.image {
+  display: flex;
+  flex-direction: column;
+
+  img {
+    max-width: 30%;
+    margin: 15px 0;
   }
-  
+}

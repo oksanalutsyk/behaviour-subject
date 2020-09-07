@@ -19,14 +19,26 @@
       name="body"
     />
   </mat-form-field>
-  <mat-checkbox class="example-margin" [(ngModel)]="checked" name="checked">Checked</mat-checkbox>
+
+  <div class="image">
+    <input type="file" (change)="onFileChanged($event)" />
+    <img src="{{ data.image }}" alt="" />
+  </div>
+  <mat-checkbox class="example-margin" [(ngModel)]="checked" name="checked"
+    >Checked</mat-checkbox
+  >
   <div mat-dialog-actions>
     <button mat-button (click)="close()">Cancel</button>
     <button
       mat-button
-      [mat-dialog-close]="{ title: data.title, body: data.body, checked: checked }"
+      [mat-dialog-close]="{
+        title: data.title,
+        body: data.body,
+        image: data.image,
+        checked: checked
+      }"
       cdkFocusInitial
-      (click)="openSnackBar()" 
+      (click)="openSnackBar()"
     >
       Save
     </button>

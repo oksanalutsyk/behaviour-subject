@@ -1,11 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {
-  MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { PostsService } from '../shared/services/posts.service';
-import { PostInterface } from '../shared/interfaces/post.interface';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -25,6 +23,8 @@ export class EditPostComponent implements OnInit {
   action = 'edited';
 
   checked = false;
+
+  imageSrc: string;
 
   constructor(
     public dialogRef: MatDialogRef<EditPostComponent>,
@@ -51,5 +51,18 @@ export class EditPostComponent implements OnInit {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
     });
+  }
+
+  onFileChanged(event) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.imageSrc = reader.result as string;
+        this.data.image = this.imageSrc;
+      };
+    }
   }
 }
