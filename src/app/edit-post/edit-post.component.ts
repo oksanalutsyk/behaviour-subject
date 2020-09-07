@@ -3,12 +3,12 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
-import { PostsService } from '../shared/services/posts.service';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import { PostsService } from '../shared/services/posts.service';
 import { SuccessAddComponent } from '../snack-bar/success-add/success-add.component';
 
 @Component({
