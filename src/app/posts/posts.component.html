@@ -1,4 +1,5 @@
 <button
+  *ngIf="isLogin"
   mat-button
   (click)="openAddDialog()"
   class="add-button"
@@ -8,12 +9,12 @@
   Add new post
 </button>
 <button
+  *ngIf="!isLogin"
   mat-button
   class="add-button"
   matTooltip="Click to login"
   matTooltipPosition="right"
   (click)="openLoginDialog()"
-  *ngIf="!isLogin"
 >
   Login
 </button>
@@ -26,11 +27,12 @@
   Sign In
 </button> -->
 <button
+  *ngIf="isLogin"
   mat-button
   class="add-button"
   matTooltip="Click to log out"
   matTooltipPosition="right"
-  *ngIf="isLogin"
+  (click)="logOut()"
 >
   Log Out
 </button>

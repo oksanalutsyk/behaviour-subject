@@ -157,8 +157,12 @@ export class PostsComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(result);
-      this.isLogin = true
+      this.isLogin = true;
     });
+  }
+
+  logOut(): void {
+    this.isLogin = false;
   }
 
   ngOnDestroy(): void {
