@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Post = require('../models/Post')
+const Post = require('../models/Post');
+const User = require('../models/User');
+const bcrypt = require('bcryptjs')
 
 
 //відслідкування url 
@@ -84,5 +86,45 @@ router.patch('/posts/update/:id', async (req, res) => {
         res.status(500).send(err)
     }
 })
+
+//user
+router.post('/auth', async (req, res) => {
+    const hash = await bcrypt.hash(req.body.password, 10)
+    try {
+        const newUser = new User({
+            name: req.body.name,
+            password: hash,
+        });
+        console.log(req.body)
+        await newUser.save();
+        res.status(200).send(newUser);
+    } catch (err) {
+        res.status(500).send(err)
+    }
+
+})
+
+router.get('/auth', async (req, res) => {
+    const { user } = req.query;
+    let users;
+    try {
+        // check if object query is not empty
+        if (!(Object.entries(req.query).length === 0 && req.query.constructor === Object)) {
+            users = await User.find({ user: { $in: user.split(',') } });
+        } else {
+            users = await User.find();
+        }
+
+        if (!users || users.length === 0) {
+            throw { message: 'User is not found' };
+        }
+        res.status(200).send(users);
+
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+
 
 module.exports = router;

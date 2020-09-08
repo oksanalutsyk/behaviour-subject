@@ -14,6 +14,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 //components
 import { AppComponent } from './app.component';
@@ -23,6 +24,8 @@ import { AddPostComponent } from './add-post/add-post.component';
 import { SuccessAddComponent } from './snack-bar/success-add/success-add.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     EditPostComponent,
     AddPostComponent,
     SuccessAddComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +53,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgxPaginationModule,
     MatSnackBarModule,
     MatCheckboxModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent],

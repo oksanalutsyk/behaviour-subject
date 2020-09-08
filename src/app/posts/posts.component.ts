@@ -7,12 +7,13 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, delay } from 'rxjs/operators';
 import { EditPostComponent } from '../edit-post/edit-post.component';
 import { PostsService } from '../shared/services/posts.service';
 import { PostInterface } from '../shared/interfaces/post.interface';
 import { AddPostComponent } from '../add-post/add-post.component';
 import { SuccessAddComponent } from '../snack-bar/success-add/success-add.component';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-posts',
@@ -34,6 +35,12 @@ export class PostsComponent implements OnInit, OnDestroy {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   action = 'deleted';
 
+  isLoading = false;
+  isLogin = false;
+
+  name: string;
+  password: string;
+
   private subscription: Subscription;
 
   constructor(
@@ -51,15 +58,20 @@ export class PostsComponent implements OnInit, OnDestroy {
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   getPosts(): void {
+    this.isLoading = true;
     const stream$ = this.postServise.query$.subscribe(
       (item) => ((this.posts = item), console.log(item)),
       (err) => console.log(err)
     );
-    const postsStream$ = this.postServise.getPosts().subscribe((data) => {
-      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      this.postServise.changeQueryParameter(data);
-      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    });
+    const postsStream$ = this.postServise
+      .getPosts()
+      .pipe(delay(1000))
+      .subscribe((data) => {
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        this.postServise.changeQueryParameter(data);
+        this.isLoading = false;
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      });
     this.subscription.add(postsStream$);
     this.subscription.add(stream$);
   }
@@ -135,6 +147,18 @@ export class PostsComponent implements OnInit, OnDestroy {
         this.getPosts();
       });
     this.subscription.add(postsStream$);
+  }
+
+  openLoginDialog(): void {
+    const dialogRef = this.dialog.open(LoginComponent, {
+      width: '1000px',
+      data: { name: this.name, password: this.password },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+      this.isLogin = true
+    });
   }
 
   ngOnDestroy(): void {
