@@ -1,1 +1,36 @@
-<p>register works!</p>
+<h3>Sign Up:</h3>
+
+<form>
+  <mat-form-field>
+    <mat-label>User name</mat-label>
+    <input
+      matInput
+      placeholder="write user name here..."
+      [(ngModel)]="data.name"
+      name="name"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input
+      matInput
+      placeholder="write password here..."
+      [(ngModel)]="data.password"
+      name="password"
+    />
+  </mat-form-field>
+
+  <div mat-dialog-actions>
+    <button mat-button (click)="close()">Cancel</button>
+    <button
+      mat-button
+      [mat-dialog-close]="{
+        name: data.name,
+        password: data.password
+      }"
+      cdkFocusInitial
+    >
+      Save
+    </button>
+  </div>
+</form>

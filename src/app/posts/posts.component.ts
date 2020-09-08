@@ -14,6 +14,8 @@ import { PostInterface } from '../shared/interfaces/post.interface';
 import { AddPostComponent } from '../add-post/add-post.component';
 import { SuccessAddComponent } from '../snack-bar/success-add/success-add.component';
 import { LoginComponent } from '../login/login.component';
+import { RegisterComponent } from '../register/register.component';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-posts',
@@ -45,6 +47,7 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   constructor(
     private postServise: PostsService,
+    private authServise: AuthService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar
   ) {
@@ -159,6 +162,29 @@ export class PostsComponent implements OnInit, OnDestroy {
       console.log(result);
       this.isLogin = true;
     });
+  }
+
+  openRegisterDialog(): void {
+    const dialogRef = this.dialog.open(RegisterComponent, {
+      width: '1000px',
+      data: { name: this.name, password: this.password },
+    });
+    const postsStream$ = dialogRef
+      .afterClosed()
+      .pipe(
+        switchMap((user) => {
+          if (user !== undefined) {
+            console.log('add', user);
+            return this.authServise.addUser(user);
+          }
+          return [];
+        })
+      )
+      .subscribe((result) => {
+        console.log(result);
+        this.isLogin = true;
+      });
+    this.subscription.add(postsStream$);
   }
 
   logOut(): void {

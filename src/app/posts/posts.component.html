@@ -18,14 +18,15 @@
 >
   Login
 </button>
-<!-- <button
+<button
   mat-button
   class="add-button"
-  matTooltip="Click to sign in"
+  matTooltip="Click to sign up"
   matTooltipPosition="right"
+  (click)="openRegisterDialog()"
 >
-  Sign In
-</button> -->
+  Sign Up
+</button>
 <button
   *ngIf="isLogin"
   mat-button
