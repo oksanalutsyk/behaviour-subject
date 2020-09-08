@@ -162,9 +162,11 @@ export class PostsComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((user) => {
-      if (user.name && user.password) {
-        console.log(user);
-        this.isLogin = true;
+      if (user) {
+        if (user.name && user.password) {
+          console.log(user);
+          this.isLogin = true;
+        }
       }
     });
   }
@@ -179,9 +181,11 @@ export class PostsComponent implements OnInit, OnDestroy {
       .afterClosed()
       .pipe(
         switchMap((user) => {
-          if (user.name && user.password) {
-            console.log('add', user);
-            return this.authServise.addUser(user);
+          if (user) {
+            if (user.name && user.password) {
+              console.log('add', user);
+              return this.authServise.addUser(user);
+            }
           }
           return [];
         })
