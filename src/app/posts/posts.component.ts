@@ -106,12 +106,13 @@ export class PostsComponent implements OnInit, OnDestroy {
         id: post._id,
         checked: this.checked,
       },
+      disableClose: true,
     });
     const postsStream$ = dialogRef
       .afterClosed()
       .pipe(
         switchMap((data) => {
-          if (data !== undefined) {
+          if (data.title && data.body && data.image) {
             return this.postServise.updatePost(post._id, data);
           }
           return [];
@@ -133,12 +134,13 @@ export class PostsComponent implements OnInit, OnDestroy {
         image: this.image,
         checked: this.checked,
       },
+      disableClose: true,
     });
     const postsStream$ = dialogRef
       .afterClosed()
       .pipe(
         switchMap((data) => {
-          if (data !== undefined) {
+          if (data.title && data.body && data.image) {
             console.log('add', data);
             return this.postServise.addNewPost(data);
           }
@@ -156,11 +158,14 @@ export class PostsComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(LoginComponent, {
       width: '1000px',
       data: { name: this.name, password: this.password },
+      disableClose: true,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
-      this.isLogin = true;
+    dialogRef.afterClosed().subscribe((user) => {
+      if (user.name && user.password) {
+        console.log(user);
+        this.isLogin = true;
+      }
     });
   }
 
@@ -168,12 +173,13 @@ export class PostsComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(RegisterComponent, {
       width: '1000px',
       data: { name: this.name, password: this.password },
+      disableClose: true,
     });
     const postsStream$ = dialogRef
       .afterClosed()
       .pipe(
         switchMap((user) => {
-          if (user !== undefined) {
+          if (user.name && user.password) {
             console.log('add', user);
             return this.authServise.addUser(user);
           }
