@@ -54,7 +54,6 @@ export class AddPostComponent implements OnInit {
       reader.onload = () => {
         this.imageSrc = reader.result as string;
         this.data.image = this.imageSrc;
-
       };
     }
   }

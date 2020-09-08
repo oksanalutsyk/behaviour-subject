@@ -7,17 +7,15 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
-
+  
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
-
   close(): void {
     this.dialogRef.close();
   }
-  
+
   ngOnInit(): void {}
 }

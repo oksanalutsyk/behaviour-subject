@@ -3,5 +3,5 @@ export interface PostInterface {
   title: string;
   body: number;
   image?: string;
-  checked?:boolean
+  checked?: boolean;
 }

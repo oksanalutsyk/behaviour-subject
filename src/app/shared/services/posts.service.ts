@@ -27,8 +27,8 @@ export class PostsService {
   updatePost(id: string, post: any): Observable<PostInterface[]> {
     return this.http.patch<PostInterface[]>(`${this.url}/update/${id}`, post);
   }
-  addNewPost(post:PostInterface):Observable<PostInterface[]> {
-    return this.http.post<PostInterface[]>(`${this.url}`, post)
+  addNewPost(post: PostInterface): Observable<PostInterface[]> {
+    return this.http.post<PostInterface[]>(`${this.url}`, post);
   }
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   changeQueryParameter(query: any) {

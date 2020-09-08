@@ -1,0 +1,135 @@
+{
+    "files.defaultLanguage": "typescript",
+    "files.trimTrailingWhitespace": true,
+    "files.watcherExclude": {
+        "**/*.js": true
+    },
+    "files.exclude": {
+        "**/.DS_Store": true,
+        "**/.git": true,
+        "**/*.css": true,
+        "**/*.js.map": true
+    },
+    "peacock.affectActivityBar": true,
+    "peacock.affectStatusBar": true,
+    "peacock.affectTitleBar": false,
+    "peacock.keepBadgeColor": false,
+    "peacock.keepForegroundColor": false,
+    "peacock.favoriteColors": [
+        {
+            "name": "Angular Red",
+            "value": "#b52e31"
+        },
+        {
+            "name": "Auth0 Orange",
+            "value": "#eb5424"
+        },
+        {
+            "name": "Azure Blue",
+            "value": "#007fff"
+        },
+        {
+            "name": "C# Purple",
+            "value": "#68217A"
+        },
+        {
+            "name": "Gatsby Purple",
+            "value": "#639"
+        },
+        {
+            "name": "Go Cyan",
+            "value": "#5dc9e2"
+        },
+        {
+            "name": "Java Blue-Gray",
+            "value": "#557c9b"
+        },
+        {
+            "name": "JavaScript Yellow",
+            "value": "#f9e64f"
+        },
+        {
+            "name": "Mandalorian Blue",
+            "value": "#1857a4"
+        },
+        {
+            "name": "Node Green",
+            "value": "#215732"
+        },
+        {
+            "name": "React Blue",
+            "value": "#00b3e6"
+        },
+        {
+            "name": "Something Different",
+            "value": "#832561"
+        },
+        {
+            "name": "Vue Green",
+            "value": "#42b883"
+        }
+    ],
+    "workbench.iconTheme": "vs-seti",
+    "window.zoomLevel": 0,
+    "editor.renderControlCharacters": true,
+    "editor.autoIndent": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": false
+    },
+    "editor.codeLens": false,
+    "editor.cursorBlinking": "solid",
+    "editor.cursorSmoothCaretAnimation": true,
+    "editor.cursorStyle": "line",
+    "editor.fontSize": 14,
+    // "editor.fontFamily": "Dank Mono, Operator Mono, Fira Code, Inconsolata, Menlo",
+    "editor.formatOnType": false,
+    "editor.letterSpacing": 0.5,
+    "editor.lineHeight": 25,
+    "editor.minimap.enabled": true,
+    "editor.renderWhitespace": "none",
+    "editor.tabCompletion": "on",
+    "editor.tabSize": 2,
+    "editor.wordWrap": "off",
+    "[html]": {
+        "editor.defaultFormatter": "HookyQR.beautify"
+        // "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    // "[typescript]": {
+    //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // },
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "git.autofetch": true,
+    "breadcrumbs.enabled": false,
+    "gitlens.views.repositories.location": "scm",
+    // "gitlens.views.fileHistory.location": "explorer",
+    // "gitlens.views.lineHistory.location": "explorer",
+    "gitlens.views.compare.location": "gitlens",
+    "gitlens.views.search.location": "gitlens",
+    "material-icon-theme.saturation": 0.9,
+    "material-icon-theme.files.associations": {
+        "*.page.ts": "angular-component"
+    },
+    "material-icon-theme.folders.associations": {
+        "modules": "resource",
+        "sections": "content",
+        "left-side-bar": "meta",
+        "right-side-bar": "meta",
+        "top-tools-bar": "meta",
+        "inspect": "layout",
+        "palette": "layout",
+    },
+    // "workbench.colorTheme": "Material Theme High Contrast",
+    "terminal.integrated.fontFamily": "monospace",
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
+    "explorer.confirmDelete": false,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "terminal.integrated.rendererType": "dom",
+    "[json]": {
+        "editor.defaultFormatter": "HookyQR.beautify"
+    },
+    "diffEditor.ignoreTrimWhitespace": false,
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    }
+}

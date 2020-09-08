@@ -1,40 +1,17 @@
-<button
-  *ngIf="isLogin"
-  mat-button
-  (click)="openAddDialog()"
-  class="add-button"
-  matTooltip="Click to add a new post"
-  matTooltipPosition="right"
->
+<button *ngIf="isLogin" mat-button (click)="openAddDialog()" class="add-button" matTooltip="Click to add a new post"
+  matTooltipPosition="right">
   Add new post
 </button>
-<button
-  *ngIf="!isLogin"
-  mat-button
-  class="add-button"
-  matTooltip="Click to login"
-  matTooltipPosition="right"
-  (click)="openLoginDialog()"
->
+<button *ngIf="!isLogin" mat-button class="add-button" matTooltip="Click to login" matTooltipPosition="right"
+  (click)="openLoginDialog()">
   Login
 </button>
-<button
-  mat-button
-  class="add-button"
-  matTooltip="Click to sign up"
-  matTooltipPosition="right"
-  (click)="openRegisterDialog()"
->
+<button mat-button class="add-button" matTooltip="Click to sign up" matTooltipPosition="right"
+  (click)="openRegisterDialog()">
   Sign Up
 </button>
-<button
-  *ngIf="isLogin"
-  mat-button
-  class="add-button"
-  matTooltip="Click to log out"
-  matTooltipPosition="right"
-  (click)="logOut()"
->
+<button *ngIf="isLogin" mat-button class="add-button" matTooltip="Click to log out" matTooltipPosition="right"
+  (click)="logOut()">
   Log Out
 </button>
 <hr />
@@ -42,47 +19,28 @@
 <div *ngIf="!isLoading && isLogin">
   <h3>Posts ({{ posts.length }})</h3>
   <div class="posts">
-    <div
-      class="post"
-      *ngFor="
+    <div class="post" *ngFor="
         let post of posts | paginate: { itemsPerPage: 6, currentPage: page }
-      "
-      id="{{ post._id }}"
-    >
+      " id="{{ post._id }}">
       <img src="{{ post.image }}" alt="" />
       <span class="title">{{ post.title }}</span>
       <span class="body">{{ post.body }}</span>
       <div class="buttons">
-        <button
-          mat-mini-fab
-          color="warn"
-          aria-label="Example icon button with a delete icon"
-          (click)="deletePost(post._id)"
-          matTooltip="Click to delete a post"
-          matTooltipPosition="below"
-        >
+        <button mat-mini-fab color="warn" aria-label="Example icon button with a delete icon"
+          (click)="deletePost(post._id)" matTooltip="Click to delete a post" matTooltipPosition="below">
           <mat-icon>delete</mat-icon>
         </button>
-        <button
-          mat-mini-fab
-          color="primary"
-          aria-label="Example icon button with a delete icon"
-          (click)="openEditDialog(post)"
-          matTooltip="Click to edit a post"
-          matTooltipPosition="below"
-        >
+        <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon"
+          (click)="openEditDialog(post)" matTooltip="Click to edit a post" matTooltipPosition="below">
           <mat-icon>edit</mat-icon>
         </button>
       </div>
-      <span *ngIf="post.checked" class="sticker"
-        ><mat-icon>check</mat-icon></span
-      >
+      <span *ngIf="post.checked" class="sticker">
+        <mat-icon>check</mat-icon>
+      </span>
     </div>
   </div>
   <div class="pagination">
-    <pagination-controls
-      (pageChange)="page = $event"
-      maxSize="5"
-    ></pagination-controls>
+    <pagination-controls (pageChange)="page = $event" maxSize="5"></pagination-controls>
   </div>
 </div>

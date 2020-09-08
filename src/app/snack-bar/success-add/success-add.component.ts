@@ -3,7 +3,6 @@ import {
   MAT_SNACK_BAR_DATA,
   MatSnackBarRef,
 } from '@angular/material/snack-bar';
-import { PostInterface } from 'src/app/shared/interfaces/post.interface';
 
 @Component({
   selector: 'app-success-add',

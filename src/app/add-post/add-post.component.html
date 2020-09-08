@@ -3,43 +3,26 @@
 <form>
   <mat-form-field>
     <mat-label>Post Title</mat-label>
-    <input
-      matInput
-      placeholder="write title here..."
-      [(ngModel)]="data.title"
-      name="title"
-    />
+    <input matInput placeholder="write title here..." [(ngModel)]="data.title" name="title" />
   </mat-form-field>
   <mat-form-field>
     <mat-label>Post Description</mat-label>
-    <input
-      matInput
-      placeholder="write description here..."
-      [(ngModel)]="data.body"
-      name="body"
-    />
+    <input matInput placeholder="write description here..." [(ngModel)]="data.body" name="body" />
   </mat-form-field>
 
   <div class="image">
     <input type="file" (change)="onFileChanged($event)" />
     <img src="{{ data.image }}" alt="" />
   </div>
-  <mat-checkbox class="example-margin" [(ngModel)]="checked" name="checked"
-    >Checked</mat-checkbox
-  >
+  <mat-checkbox class="example-margin" [(ngModel)]="checked" name="checked">Checked</mat-checkbox>
   <div mat-dialog-actions>
     <button mat-button (click)="close()">Cancel</button>
-    <button
-      mat-button
-      [mat-dialog-close]="{
+    <button mat-button [mat-dialog-close]="{
         title: data.title,
         body: data.body,
         image: data.image,
         checked: checked
-      }"
-      cdkFocusInitial
-      (click)="openSnackBar()"
-    >
+      }" cdkFocusInitial (click)="openSnackBar()">
       Save
     </button>
   </div>
