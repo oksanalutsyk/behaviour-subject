@@ -6,7 +6,7 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-import { Subscription } from 'rxjs';
+import { Subscription, of } from 'rxjs';
 import { switchMap, delay } from 'rxjs/operators';
 import { EditPostComponent } from '../edit-post/edit-post.component';
 import { PostsService } from '../shared/services/posts.service';
@@ -57,7 +57,6 @@ export class PostsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getPosts();
   }
-
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   getPosts(): void {
@@ -83,9 +82,9 @@ export class PostsComponent implements OnInit, OnDestroy {
   deletePost(id): void {
     const postsStream$ = this.postServise.deletePost(id).subscribe((data) => {
       this.openSnackBar(data);
+      this.postServise.changeQueryParameter(data);
     });
     this.subscription.add(postsStream$);
-    this.getPosts();
   }
 
   openSnackBar(data) {
@@ -115,12 +114,12 @@ export class PostsComponent implements OnInit, OnDestroy {
           if (data.title && data.body && data.image) {
             return this.postServise.updatePost(post._id, data);
           }
-          return [];
+          return of([]);
         })
       )
       .subscribe((data) => {
         console.log('update', data);
-        this.getPosts();
+        this.postServise.changeQueryParameter(data);
       });
     this.subscription.add(postsStream$);
   }
@@ -144,12 +143,12 @@ export class PostsComponent implements OnInit, OnDestroy {
             console.log('add', data);
             return this.postServise.addNewPost(data);
           }
-          return [];
+          return of([]);
         })
       )
       .subscribe((data) => {
         console.log('update', data);
-        this.getPosts();
+        this.postServise.changeQueryParameter(data);
       });
     this.subscription.add(postsStream$);
   }
@@ -187,7 +186,7 @@ export class PostsComponent implements OnInit, OnDestroy {
               return this.authServise.addUser(user);
             }
           }
-          return [];
+          return of([]);
         })
       )
       .subscribe((result) => {

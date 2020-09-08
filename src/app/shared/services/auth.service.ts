@@ -14,4 +14,5 @@ export class AuthService {
   addUser(user: UserInterface): Observable<UserInterface[]> {
     return this.http.post<UserInterface[]>(`${this.url}`, user);
   }
+
 }
