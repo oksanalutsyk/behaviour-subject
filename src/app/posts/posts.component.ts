@@ -17,6 +17,7 @@ import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
 import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-posts',
@@ -44,7 +45,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   name: string;
   password: string;
 
-  loginUser
+  loginUser;
 
   private subscription: Subscription;
 
@@ -172,7 +173,10 @@ export class PostsComponent implements OnInit, OnDestroy {
           this.authServise.login(user).subscribe(
             (data) => {
               console.log(data);
-              this.router.navigate(['/userPage'])
+              this.loginUser = data;
+              this.router.navigate(['/userPage'], {
+                state: { data: { userId: data.id } },
+              });
             },
             (err) => console.log(err)
           );

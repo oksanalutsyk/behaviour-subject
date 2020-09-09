@@ -19,7 +19,7 @@ export class AuthService {
   login(data: any): Observable<any> {
     return this.http.post<any>(`${this.loginUrl}`, data)
   }
-  getUserById(id: string): Observable<UserInterface[]> {
-    return this.http.get<UserInterface[]>(`${this.registerUrl}/${id}`);
+  getUserById(id: string): Observable<UserInterface> {
+    return this.http.get<UserInterface>(`${this.registerUrl}/${id}`);
   }
 }
