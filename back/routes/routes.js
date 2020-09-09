@@ -144,8 +144,21 @@ router.post('/login', async (req, res) => {
         }
         const token = jwt.sign({ name: user.name, userId: user._id }, 'secret_this_should_be_longer', { expiresIn: "1h" });
         res.status(200).json({
-            token: token
+            token: token,
+            id:user._id,
         })
+    } catch (err) {
+        res.status(400).send(err);
+    }
+})
+router.get('/auth/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).send('User does not exist!');
+        }
+        res.status(200).send(user);
     } catch (err) {
         res.status(400).send(err);
     }

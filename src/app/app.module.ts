@@ -26,6 +26,7 @@ import { SuccessAddComponent } from './snack-bar/success-add/success-add.compone
 import { NgxPaginationModule } from 'ngx-pagination';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { UserPageComponent } from './user-page/user-page.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { RegisterComponent } from './register/register.component';
     SuccessAddComponent,
     LoginComponent,
     RegisterComponent,
+    UserPageComponent,
   ],
   imports: [
     BrowserModule,

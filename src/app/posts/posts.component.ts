@@ -16,6 +16,7 @@ import { SuccessAddComponent } from '../snack-bar/success-add/success-add.compon
 import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
 import { AuthService } from '../shared/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-posts',
@@ -43,13 +44,16 @@ export class PostsComponent implements OnInit, OnDestroy {
   name: string;
   password: string;
 
+  loginUser
+
   private subscription: Subscription;
 
   constructor(
     private postServise: PostsService,
     private authServise: AuthService,
     public dialog: MatDialog,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    public router: Router
   ) {
     this.subscription = new Subscription();
   }
@@ -166,8 +170,9 @@ export class PostsComponent implements OnInit, OnDestroy {
         if (user.name && user.password) {
           this.isLogin = true;
           this.authServise.login(user).subscribe(
-            (token) => {
-              console.log(token);
+            (data) => {
+              console.log(data);
+              this.router.navigate(['/userPage'])
             },
             (err) => console.log(err)
           );
