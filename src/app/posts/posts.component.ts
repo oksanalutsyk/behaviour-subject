@@ -162,9 +162,15 @@ export class PostsComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((user) => {
       if (user) {
+        console.log(user);
         if (user.name && user.password) {
-          console.log(user);
           this.isLogin = true;
+          this.authServise.login(user).subscribe(
+            (token) => {
+              console.log(token);
+            },
+            (err) => console.log(err)
+          );
         }
       }
     });

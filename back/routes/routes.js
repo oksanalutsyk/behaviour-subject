@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 const User = require('../models/User');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken')
 
 
-//відслідкування url 
+//відслідкування url
 
 // router.get('/edit', (req, res) => {
 //     res.send('Edit posts')
@@ -124,6 +125,31 @@ router.get('/auth', async (req, res) => {
         res.status(400).send(err);
     }
 });
+
+router.post('/login', async (req, res) => {
+    const { name } = req.body;
+    try {
+        const user = await User.findOne({ name })
+        if (!user) {
+            // return res.status(401).json({
+            return res.json({
+                message: 'Auth failed'
+            })
+        }
+        const result = await bcrypt.compare(req.body.password, user.password);
+        if (!result) {
+            return res.status(401).json({
+                message: 'Auth failed'
+            })
+        }
+        const token = jwt.sign({ name: user.name, userId: user._id }, 'secret_this_should_be_longer', { expiresIn: "1h" });
+        res.status(200).json({
+            token: token
+        })
+    } catch (err) {
+        res.status(400).send(err);
+    }
+})
 
 
 
