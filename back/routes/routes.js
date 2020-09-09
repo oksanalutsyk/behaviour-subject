@@ -8,9 +8,7 @@ const jwt = require('jsonwebtoken')
 
 //відслідкування url
 
-// router.get('/edit', (req, res) => {
-//     res.send('Edit posts')
-// })
+// posts
 router.get('/posts', async (req, res) => {
     const { post } = req.query;
     let posts;
@@ -146,6 +144,7 @@ router.post('/login', async (req, res) => {
         res.status(200).json({
             token: token,
             id:user._id,
+            isLogin:true
         })
     } catch (err) {
         res.status(400).send(err);
@@ -163,7 +162,19 @@ router.get('/auth/:id', async (req, res) => {
         res.status(400).send(err);
     }
 })
+router.delete('/auth/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const response = await User.findByIdAndDelete({ _id: id });
+        res.send(response);
 
+        if (!response) {
+            return res.status(404).send('User does not exist!');
+        }
+    } catch (err) {
+        res.status(400).send(err);
+    }
+})
 
 
 module.exports = router;
