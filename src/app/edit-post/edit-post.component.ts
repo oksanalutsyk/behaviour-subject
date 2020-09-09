@@ -6,7 +6,7 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { PostsService } from '../shared/services/posts.service';
-import { SuccessAddComponent } from '../snack-bar/success-add/success-add.component';
+import { SuccessAddComponent } from '../components/snack-bar/success-add/success-add.component';
 
 @Component({
   selector: 'app-edit-post',

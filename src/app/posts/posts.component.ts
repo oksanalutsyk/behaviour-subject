@@ -6,18 +6,20 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { state } from '@angular/animations';
+
 import { Subscription, of } from 'rxjs';
 import { switchMap, delay } from 'rxjs/operators';
 import { EditPostComponent } from '../edit-post/edit-post.component';
 import { PostsService } from '../shared/services/posts.service';
 import { PostInterface } from '../shared/interfaces/post.interface';
 import { AddPostComponent } from '../add-post/add-post.component';
-import { SuccessAddComponent } from '../snack-bar/success-add/success-add.component';
 import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
+import { SuccessAddComponent } from '../components/snack-bar/success-add/success-add.component';
 import { AuthService } from '../shared/services/auth.service';
-import { Router } from '@angular/router';
-import { state } from '@angular/animations';
+
 
 @Component({
   selector: 'app-posts',
@@ -207,8 +209,10 @@ export class PostsComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((result) => {
-        console.log(result);
-        this.isLogin = true;
+        if(result.length>0){
+          console.log(result);
+          this.isLogin = true;
+        }
       });
     this.subscription.add(postsStream$);
   }
