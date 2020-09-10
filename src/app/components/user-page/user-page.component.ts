@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../shared/services/auth.service';
-import { UserInterface } from '../shared/interfaces/user.interface';
+import { AuthService } from '../../shared/services/auth.service';
+import { UserInterface } from '../../shared/interfaces/user.interface';
 
 @Component({
   selector: 'app-user-page',

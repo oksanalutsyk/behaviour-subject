@@ -1,4 +1,4 @@
-<button *ngIf="!isLogin; else login" mat-button class="add-button" matTooltip="Click to login"
+<!-- <button *ngIf="!isLogin; else login" mat-button class="add-button" matTooltip="Click to login"
   matTooltipPosition="right" (click)="openLoginDialog()">
   Login
 </button>
@@ -10,12 +10,12 @@
   <button mat-button class="add-button" matTooltip="Click to log out" matTooltipPosition="right" (click)="logOut()">
     Log Out
   </button>
-</ng-template>
+</ng-template> -->
 
-<button mat-button class="add-button" matTooltip="Click to sign up" matTooltipPosition="right"
+<!-- <button mat-button class="add-button" matTooltip="Click to sign up" matTooltipPosition="right"
   (click)="openRegisterDialog()">
   Sign Up
-</button>
+</button> -->
 <hr />
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 <div *ngIf="!isLoading && isLogin">
