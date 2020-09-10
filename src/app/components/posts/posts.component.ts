@@ -7,8 +7,6 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { state } from '@angular/animations';
-
 import { Subscription, of } from 'rxjs';
 import { switchMap, delay } from 'rxjs/operators';
 import { PostsService } from '../../shared/services/posts.service';
@@ -16,9 +14,6 @@ import { PostInterface } from '../../shared/interfaces/post.interface';
 import { SuccessAddComponent } from '../../components/snack-bar/success-add/success-add.component';
 import { AuthService } from '../../shared/services/auth.service';
 import { EditPostComponent } from '../edit-post/edit-post.component';
-import { AddPostComponent } from '../add-post/add-post.component';
-import { LoginComponent } from '../login/login.component';
-import { RegisterComponent } from '../register/register.component';
 
 @Component({
   selector: 'app-posts',
@@ -26,7 +21,6 @@ import { RegisterComponent } from '../register/register.component';
   styleUrls: ['./posts.component.scss'],
 })
 export class PostsComponent implements OnInit, OnDestroy {
-  myForm: FormGroup;
   posts: PostInterface[];
   title: string;
   body: string;
@@ -42,7 +36,7 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   isLoading = false;
   isLogin = false;
-
+  //user
   name: string;
   password: string;
 
@@ -61,30 +55,27 @@ export class PostsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getPosts();
   }
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
   getPosts(): void {
-    // this.isLoading = true;
     const stream$ = this.postServise.query$.subscribe(
       (item) => ((this.posts = item), console.log(item)),
       (err) => console.log(err)
     );
     const isLoading$ = this.authServise.isLoadingQuery$.subscribe(
-      (item) => ((this.isLogin = item), console.log(this.isLogin)),
+      (item) => ((this.isLogin = item.query)),
       (err) => console.log(err)
-    )
+    );
     const postsStream$ = this.postServise
       .getPosts()
       .pipe(delay(1000))
       .subscribe((data) => {
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         this.postServise.changeQueryParameter(data);
-        // this.isLoading = false;
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       });
     this.subscription.add(postsStream$);
     this.subscription.add(stream$);
     this.subscription.add(isLoading$);
+
   }
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

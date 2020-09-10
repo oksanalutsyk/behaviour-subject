@@ -50,12 +50,12 @@ export class NavBarComponent implements OnInit {
     dialogRef.afterClosed().subscribe((user) => {
       if (user) {
         if (user.name && user.password) {
-          // this.isLogin = true;
           this.authServise.login(user).subscribe(
             (data) => {
+              //зберігаємо токен, id і isLogin:true в localStorage
+              localStorage.setItem("user", JSON.stringify(data));
               if (data.id !== undefined) {
                 this.loginUser = user.name;
-                console.log(this.loginUser)
                 this.isLogin = data.isLogin;
                 this.authServise.changeIsLoadingQueryParameter(data.isLogin, data.id);
                 console.log('Login', this.isLogin);
@@ -127,5 +127,6 @@ export class NavBarComponent implements OnInit {
     this.isLogin = false;
     this.authServise.changeIsLoadingQueryParameter(false);
     console.log('Login', this.isLogin);
+    localStorage.removeItem('user');
   }
 }

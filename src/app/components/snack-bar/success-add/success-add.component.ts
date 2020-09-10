@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {
   MAT_SNACK_BAR_DATA,
   MatSnackBarRef,
@@ -9,13 +9,10 @@ import {
   templateUrl: './success-add.component.html',
   styleUrls: ['./success-add.component.scss'],
 })
-export class SuccessAddComponent implements OnInit {
+export class SuccessAddComponent {
   
   constructor(
     @Inject(MAT_SNACK_BAR_DATA) public data: any,
-    //to close snack-bar
     public snackBarRef: MatSnackBarRef<any>
   ) {}
-
-  ngOnInit(): void {}
 }
