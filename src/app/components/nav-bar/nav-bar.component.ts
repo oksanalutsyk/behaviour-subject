@@ -57,11 +57,11 @@ export class NavBarComponent implements OnInit {
                 this.loginUser = user.name;
                 console.log(this.loginUser)
                 this.isLogin = data.isLogin;
-                this.authServise.changeIsLoadingQueryParameter(data.isLogin);
+                this.authServise.changeIsLoadingQueryParameter(data.isLogin, data.id);
                 console.log('Login', this.isLogin);
-                // this.router.navigate(['/userPage'], {
-                //   state: { data: { userId: data.id } },
-                // });
+                this.router.navigate(['/userPage'], {
+                  state: { data: { userId: data.id } },
+                });
               }
             },
             (err) => console.log(err)

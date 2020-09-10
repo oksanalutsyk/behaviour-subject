@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  justify-content: center;
+  .userPage {
+    width: 70%;
+    .title{
+      text-align: center;
+      span{
+        text-decoration: underline;
+      }
+    }
+  }
+
+}
+

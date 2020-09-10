@@ -20,7 +20,7 @@
       Add new post
     </button>
     <div class="auth-block">
-      <div class="login-user">
+      <div class="login-user" [routerLink]="['/userPage']">
         <span class="material-icons">person</span>
         <span>{{loginUser}}</span>
       </div>
@@ -31,3 +31,4 @@
 
   </ng-template>
 </div>
+<hr>

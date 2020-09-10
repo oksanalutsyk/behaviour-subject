@@ -10,13 +10,19 @@ import { UserInterface } from '../../shared/interfaces/user.interface';
 export class UserPageComponent implements OnInit {
   userId: string;
   user: UserInterface;
+  isLogin:false;
 
   constructor(private authServise: AuthService) {}
 
   ngOnInit(): void {
+    console.log('user page')
+    const isLoading$ = this.authServise.isLoadingQuery$.subscribe(
+      (item) => ((this.isLogin = item), console.log(this.isLogin)),
+      (err) => console.log(err)
+    )
     // console.log(history.state);
     // user id
-    if (history.state.data) {
+    if (this.isLogin) {
       this.userId = history.state.data.userId;
       this.authServise.getUserById(this.userId).subscribe((user) => {
         this.user = user;

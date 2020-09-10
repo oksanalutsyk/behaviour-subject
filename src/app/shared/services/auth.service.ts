@@ -15,19 +15,19 @@ export class AuthService {
   private isLoadingSubject = new BehaviorSubject<any>('');
   isLoadingQuery$ = this.isLoadingSubject.asObservable();
 
-  constructor(private http: HttpClient, private postService: PostsService,) {}
+  constructor(private http: HttpClient, private postService: PostsService) {}
 
   addUser(user: UserInterface): Observable<UserInterface[]> {
     return this.http.post<UserInterface[]>(`${this.registerUrl}`, user);
   }
   login(data: any): Observable<any> {
-    return this.http.post<any>(`${this.loginUrl}`, data)
+    return this.http.post<any>(`${this.loginUrl}`, data);
   }
   getUserById(id: string): Observable<UserInterface> {
     return this.http.get<UserInterface>(`${this.registerUrl}/${id}`);
   }
 
-  changeIsLoadingQueryParameter(query: any) {
-    this.isLoadingSubject.next(query);
+  changeIsLoadingQueryParameter(query: any, id?: string) {
+    this.isLoadingSubject.next({ query: query, id: id });
   }
 }

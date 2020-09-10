@@ -1,1 +1,7 @@
-<p>{{user?.name}}</p>
+<div class="container">
+  <button mat-button class="button" matTooltip="back to home page" matTooltipPosition="right"
+    [routerLink]="['/']">Home</button>
+  <div class="userPage">
+      <p class="title">Hello <span>{{user?.name}}</span></p>
+    </div>
+</div>
