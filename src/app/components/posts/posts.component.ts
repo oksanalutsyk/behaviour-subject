@@ -46,8 +46,6 @@ export class PostsComponent implements OnInit, OnDestroy {
   name: string;
   password: string;
 
-  loginUser;
-
   private subscription: Subscription;
 
   constructor(
@@ -134,93 +132,6 @@ export class PostsComponent implements OnInit, OnDestroy {
       });
     this.subscription.add(postsStream$);
   }
-
-  // openAddDialog(): void {
-  //   const dialogRef = this.dialog.open(AddPostComponent, {
-  //     width: '1000px',
-  //     data: {
-  //       title: this.title,
-  //       body: this.body,
-  //       image: this.image,
-  //       checked: this.checked,
-  //     },
-  //     disableClose: true,
-  //   });
-  //   const postsStream$ = dialogRef
-  //     .afterClosed()
-  //     .pipe(
-  //       switchMap((data) => {
-  //         if (data.title && data.body && data.image) {
-  //           console.log('add', data);
-  //           return this.postServise.addNewPost(data);
-  //         }
-  //         return of([]);
-  //       })
-  //     )
-  //     .subscribe((data) => {
-  //       console.log('update', data);
-  //       this.postServise.changeQueryParameter(data);
-  //     });
-  //   this.subscription.add(postsStream$);
-  // }
-
-  // openLoginDialog(): void {
-  //   const dialogRef = this.dialog.open(LoginComponent, {
-  //     width: '1000px',
-  //     data: { name: this.name, password: this.password },
-  //     disableClose: true,
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((user) => {
-  //     if (user) {
-  //       // console.log(user);
-  //       if (user.name && user.password) {
-  //         // this.isLogin = true;
-  //         this.authServise.login(user).subscribe(
-  //           (data) => {
-  //             if (data.id !== undefined) {
-  //               this.isLogin = data.isLogin;
-  //               // this.router.navigate(['/userPage'], {
-  //               //   state: { data: { userId: data.id } },
-  //               // });
-  //             }
-  //           },
-  //           (err) => console.log(err)
-  //         );
-  //       }
-  //     }
-  //   });
-  // }
-
-  // openRegisterDialog(): void {
-  //   const dialogRef = this.dialog.open(RegisterComponent, {
-  //     width: '1000px',
-  //     data: { name: this.name, password: this.password },
-  //     disableClose: true,
-  //   });
-  //   const postsStream$ = dialogRef
-  //     .afterClosed()
-  //     .pipe(
-  //       switchMap((user) => {
-  //         if (user) {
-  //           if (user.name && user.password) {
-  //             console.log('add', user);
-  //             this.isLogin = true;
-  //             return this.authServise.addUser(user);
-  //           }
-  //         }
-  //         return of([]);
-  //       })
-  //     )
-  //     .subscribe((result) => {
-  //       console.log(result);
-  //     });
-  //   this.subscription.add(postsStream$);
-  // }
-
-  // logOut(): void {
-  //   this.isLogin = false;
-  // }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

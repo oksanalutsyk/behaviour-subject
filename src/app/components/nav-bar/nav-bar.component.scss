@@ -1,3 +1,21 @@
-.add-button {
+
+.nav-bar{
   margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  .auth-block{
+    display: flex;
+    align-items: center;
+    .login-user{
+      display: flex;
+      .material-icons{
+        margin-right: 3px;
+        color: white;
+        background-color: black;
+        border-radius: 100%;
+        padding: 2px;
+      }
+    }
+  }
+
 }
