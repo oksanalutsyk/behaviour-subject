@@ -19,14 +19,15 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 //components
 import { AppComponent } from './app.component';
 import { PostsComponent } from './posts/posts.component';
-import { EditPostComponent } from './edit-post/edit-post.component';
 import { AddPostComponent } from './add-post/add-post.component';
-
-import { NgxPaginationModule } from 'ngx-pagination';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UserPageComponent } from './user-page/user-page.component';
 import { SuccessAddComponent } from './components/snack-bar/success-add/success-add.component';
+import { EditPostComponent } from './components/edit-post/edit-post.component';
+
+import { NgxPaginationModule } from 'ngx-pagination';
+
 
 @NgModule({
   declarations: [
