@@ -3,7 +3,9 @@ const router = express.Router();
 const Post = require('../models/Post');
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { generateRefreshToken, generateAccessToken, generateEmailToken } = require('../token');
+const checkAuth = require("../middleware/check-auth")
 
 
 //відслідкування url
@@ -129,7 +131,7 @@ router.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ name })
         if (!user) {
-            // return res.status(401).json({
+            console.log('Auth failed')
             return res.json({
                 message: 'Auth failed'
             })
@@ -143,8 +145,8 @@ router.post('/login', async (req, res) => {
         const token = jwt.sign({ name: user.name, userId: user._id }, 'secret_this_should_be_longer', { expiresIn: "1h" });
         res.status(200).json({
             token: token,
-            id:user._id,
-            isLogin:true
+            id: user._id,
+            isLogin: true
         })
     } catch (err) {
         res.status(400).send(err);
@@ -152,13 +154,22 @@ router.post('/login', async (req, res) => {
 })
 router.get('/auth/:id', async (req, res) => {
     const id = req.params.id;
+    const user = await User.findById(id);
     try {
-        const user = await User.findById(id);
         if (!user) {
+            console.log('User does not exist!')
             return res.status(404).send('User does not exist!');
         }
-        res.status(200).send(user);
+        const userName = { name: user.name };
+        const accessToken = generateAccessToken(userName);
+        const refreshToken = generateRefreshToken(userName);
+        user.tokens = [];
+        user.tokens.push(refreshToken);
+        user.password = '';
+        res.status(200).send({ accessToken, refreshToken, user });
+        console.log(user)
     } catch (err) {
+        console.log(err)
         res.status(400).send(err);
     }
 })
