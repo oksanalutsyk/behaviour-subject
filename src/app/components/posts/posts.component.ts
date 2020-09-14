@@ -65,7 +65,7 @@ export class PostsComponent implements OnInit, OnDestroy {
       (err) => console.log(err)
     );
     const isLoading$ = this.authServise.isLoadingQuery$.subscribe(
-      (item) => ((this.isLogin = item.query), console.log(item)),
+      (query) => ((this.isLogin = query), console.log(query)),
       (err) => console.log(err)
     );
     const postsStream$ = this.postServise

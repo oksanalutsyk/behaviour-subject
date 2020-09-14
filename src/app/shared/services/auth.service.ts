@@ -29,7 +29,7 @@ export class AuthService {
     });
   }
 
-  changeIsLoadingQueryParameter(query: any, id?: string) {
-    this.isLoadingSubject.next({ query: query, id: id });
+  changeIsLoadingQueryParameter(query: any) {
+    this.isLoadingSubject.next(query);
   }
 }

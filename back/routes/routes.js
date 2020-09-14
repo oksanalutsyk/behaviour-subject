@@ -89,8 +89,16 @@ router.patch('/posts/update/:id', async (req, res) => {
 
 //user
 router.post('/auth', async (req, res) => {
-    const hash = await bcrypt.hash(req.body.password, 10)
+    const { name } = req.body;
+    const hash = await bcrypt.hash(req.body.password, 10);
     try {
+        const checkedUser = await User.findOne({ name })
+        if (checkedUser) {
+            return res.json({
+                message: 'user already exist',
+                errorNumber: '403'
+            })
+        }
         const newUser = new User({
             name: req.body.name,
             password: hash,
@@ -144,14 +152,13 @@ router.post('/login', async (req, res) => {
         const token = jwt.sign({ name: user.name, userId: user._id }, 'secret_this_should_be_longer', { expiresIn: "1h" });
         res.status(200).json({
             token: token,
-            id:user._id,
-            isLogin:true
+            id: user._id
         })
     } catch (err) {
         res.status(400).send(err);
     }
 })
-router.get('/auth/:id', userTokenVerify,async (req, res) => {
+router.get('/auth/:id', userTokenVerify, async (req, res) => {
     console.log(req.param)
     const id = req.params.id;
     try {

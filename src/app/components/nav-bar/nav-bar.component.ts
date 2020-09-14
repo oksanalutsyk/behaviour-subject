@@ -71,7 +71,7 @@ export class NavBarComponent implements OnInit {
               if (data.id !== undefined) {
                 this.loginUserName = user.name;
                 this.isLogin = data.token;
-                this.authServise.changeIsLoadingQueryParameter(true, data.id);
+                this.authServise.changeIsLoadingQueryParameter(true);
                 this.router.navigate(['/userPage']);
               }
             },
