@@ -3,7 +3,8 @@ const router = express.Router();
 const Post = require('../models/Post');
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const userTokenVerify = require('../middleware/user');
 
 
 //відслідкування url
@@ -150,7 +151,8 @@ router.post('/login', async (req, res) => {
         res.status(400).send(err);
     }
 })
-router.get('/auth/:id', async (req, res) => {
+router.get('/auth/:id', userTokenVerify,async (req, res) => {
+    console.log(req.param)
     const id = req.params.id;
     try {
         const user = await User.findById(id);
@@ -158,6 +160,7 @@ router.get('/auth/:id', async (req, res) => {
             return res.status(404).send('User does not exist!');
         }
         res.status(200).send(user);
+        console.log(user)
     } catch (err) {
         res.status(400).send(err);
     }
