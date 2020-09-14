@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 export class UserPageComponent implements OnInit, OnDestroy {
   userId: string;
   user: UserInterface;
-  isLogin: false;
+  isLogin = false;
 
   token: string;
   data;
@@ -26,18 +26,21 @@ export class UserPageComponent implements OnInit, OnDestroy {
     this.data = localStorage.getItem('user');
     if (this.data) {
       this.token = JSON.parse(this.data).token;
+      const isLoading$ = this.authServise.isLoadingQuery$.subscribe(
+        (item) => (this.isLogin = item.query),
+        (err) => console.log(err)
+      );
+      if (this.token) {
+        this.isLogin = true
+        this.userId = JSON.parse(this.data).id;
+        this.authServise
+          .getUserById(this.userId, this.token)
+          .subscribe((user) => {
+            this.user = user;
+          });
+      }
+      this.subscription.add(isLoading$);
     }
-    const isLoading$ = this.authServise.isLoadingQuery$.subscribe(
-      (item) => (this.isLogin = item.query),
-      (err) => console.log(err)
-    );
-    if (this.isLogin) {
-      this.userId = JSON.parse(this.data).id;
-      this.authServise.getUserById(this.userId).subscribe((user) => {
-        this.user = user;
-      });
-    }
-    this.subscription.add(isLoading$);
   }
 
   ngOnDestroy(): void {

@@ -8,6 +8,7 @@ import { PostsService } from 'src/app/shared/services/posts.service';
 import { AddPostComponent } from '../add-post/add-post.component';
 import { of, Subscription } from 'rxjs';
 import { RegisterComponent } from '../register/register.component';
+import { UserInterface } from 'src/app/shared/interfaces/user.interface';
 
 @Component({
   selector: 'nav-bar',
@@ -23,9 +24,9 @@ export class NavBarComponent implements OnInit {
   name: string;
   password: string;
 
-  loginUser;
-
+  loginUserName: string;
   isLogin = false;
+  user: UserInterface;
 
   private subscription: Subscription;
 
@@ -38,7 +39,19 @@ export class NavBarComponent implements OnInit {
     this.subscription = new Subscription();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const data = localStorage.getItem('user');
+    const parsedData = JSON.parse(data);
+    if (data) {
+      this.authServise
+        .getUserById(parsedData.id, parsedData.token)
+        .subscribe((user) => {
+          this.user = user;
+          this.isLogin = true;
+          this.loginUserName = user.name;
+        });
+    }
+  }
 
   openLoginDialog(): void {
     const dialogRef = this.dialog.open(LoginComponent, {
@@ -49,19 +62,17 @@ export class NavBarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((user) => {
       if (user) {
+        console.log(user);
         if (user.name && user.password) {
           this.authServise.login(user).subscribe(
             (data) => {
               //зберігаємо токен, id і isLogin:true в localStorage
-              localStorage.setItem("user", JSON.stringify(data));
+              localStorage.setItem('user', JSON.stringify(data));
               if (data.id !== undefined) {
-                this.loginUser = user.name;
-                this.isLogin = data.isLogin;
-                this.authServise.changeIsLoadingQueryParameter(data.isLogin, data.id);
-                console.log('Login', this.isLogin);
-                this.router.navigate(['/userPage'], {
-                  state: { data: { userId: data.id } },
-                });
+                this.loginUserName = user.name;
+                this.isLogin = data.token;
+                this.authServise.changeIsLoadingQueryParameter(true, data.id);
+                this.router.navigate(['/userPage']);
               }
             },
             (err) => console.log(err)
@@ -70,6 +81,7 @@ export class NavBarComponent implements OnInit {
       }
     });
   }
+
   openAddDialog(): void {
     const dialogRef = this.dialog.open(AddPostComponent, {
       width: '1000px',
@@ -111,7 +123,7 @@ export class NavBarComponent implements OnInit {
           if (user) {
             if (user.name && user.password) {
               console.log('add', user);
-              this.isLogin = true;
+              // this.isLogin = true;
               return this.authServise.addUser(user);
             }
           }

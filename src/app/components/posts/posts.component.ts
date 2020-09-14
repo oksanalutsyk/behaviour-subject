@@ -53,7 +53,11 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getPosts();
+    const data = localStorage.getItem('user');
+    if (data) {
+      this.authServise.changeIsLoadingQueryParameter(true);
+      this.getPosts();
+    }
   }
   getPosts(): void {
     const stream$ = this.postServise.query$.subscribe(
@@ -61,7 +65,7 @@ export class PostsComponent implements OnInit, OnDestroy {
       (err) => console.log(err)
     );
     const isLoading$ = this.authServise.isLoadingQuery$.subscribe(
-      (item) => ((this.isLogin = item.query)),
+      (item) => ((this.isLogin = item.query), console.log(item)),
       (err) => console.log(err)
     );
     const postsStream$ = this.postServise
@@ -70,12 +74,12 @@ export class PostsComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         this.postServise.changeQueryParameter(data);
+        // this.authServise.changeIsLoadingQueryParameter(this.isLogin);
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       });
     this.subscription.add(postsStream$);
     this.subscription.add(stream$);
     this.subscription.add(isLoading$);
-
   }
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

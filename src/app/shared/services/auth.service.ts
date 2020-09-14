@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { UserInterface } from '../interfaces/user.interface';
 import { PostsService } from './posts.service';
@@ -23,8 +23,10 @@ export class AuthService {
   login(data: any): Observable<any> {
     return this.http.post<any>(`${this.loginUrl}`, data);
   }
-  getUserById(id: string): Observable<UserInterface> {
-    return this.http.get<UserInterface>(`${this.registerUrl}/${id}`);
+  getUserById(id: string, token: string): Observable<any> {
+    return this.http.get<any>(`${this.registerUrl}/${id}`, {
+      headers: new HttpHeaders().set('x-auth-token', token),
+    });
   }
 
   changeIsLoadingQueryParameter(query: any, id?: string) {
