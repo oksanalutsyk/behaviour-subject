@@ -9,6 +9,8 @@ import { AddPostComponent } from '../add-post/add-post.component';
 import { of, Subscription } from 'rxjs';
 import { RegisterComponent } from '../register/register.component';
 import { UserInterface } from 'src/app/shared/interfaces/user.interface';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { UnsuccessComponent } from '../snack-bar/unsuccess/unsuccess.component';
 
 @Component({
   selector: 'nav-bar',
@@ -28,13 +30,19 @@ export class NavBarComponent implements OnInit {
   isLogin = false;
   user: UserInterface;
 
+  durationInSeconds = 5;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+  action = 'added';
+
   private subscription: Subscription;
 
   constructor(
     private authServise: AuthService,
     private postServise: PostsService,
     public dialog: MatDialog,
-    public router: Router
+    public router: Router,
+    private _snackBar: MatSnackBar
   ) {
     this.subscription = new Subscription();
   }
@@ -59,10 +67,8 @@ export class NavBarComponent implements OnInit {
       data: { name: this.name, password: this.password },
       disableClose: true,
     });
-
     dialogRef.afterClosed().subscribe((user) => {
       if (user) {
-        console.log(user);
         if (user.name && user.password) {
           this.authServise.login(user).subscribe(
             (data) => {
@@ -123,7 +129,6 @@ export class NavBarComponent implements OnInit {
           if (user) {
             if (user.name && user.password) {
               console.log('add', user);
-              // this.isLogin = true;
               return this.authServise.addUser(user);
             }
           }
@@ -131,9 +136,24 @@ export class NavBarComponent implements OnInit {
         })
       )
       .subscribe((result) => {
-        console.log(result);
+        if (result.hasOwnProperty('status')) {
+          console.log('FALSE', result);
+          this.openUnsuccessSnackBar(result)
+        } else {
+          console.log('TRUE', result);
+        }
       });
     this.subscription.add(postsStream$);
+  }
+  openUnsuccessSnackBar(data) {
+    this._snackBar.openFromComponent(UnsuccessComponent, {
+      duration: this.durationInSeconds * 1000,
+      data: { data: data, message: this.action },
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      panelClass: ['unsuccess-snackbar']
+    });
+    console.log(data.message)
   }
   logOut(): void {
     this.isLogin = false;

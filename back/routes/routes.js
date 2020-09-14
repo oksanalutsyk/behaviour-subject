@@ -95,6 +95,7 @@ router.post('/auth', async (req, res) => {
         const checkedUser = await User.findOne({ name })
         if (checkedUser) {
             return res.json({
+                status: false,
                 message: 'user already exist',
                 errorNumber: '403'
             })
@@ -105,7 +106,8 @@ router.post('/auth', async (req, res) => {
         });
         console.log(req.body)
         await newUser.save();
-        res.status(200).send(newUser);
+        res.status(200).send({ newUser: newUser, message: 'user successfully added' },
+        );
     } catch (err) {
         res.status(500).send(err)
     }

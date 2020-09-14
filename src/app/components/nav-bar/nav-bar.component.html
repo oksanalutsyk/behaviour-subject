@@ -15,20 +15,24 @@
   </div>
 
   <ng-template #login>
-    <button mat-button (click)="openAddDialog()" class="button" matTooltip="Click to add a new post"
-      matTooltipPosition="right">
-      Add new post
-    </button>
+    <div>
+      <button mat-button (click)="openAddDialog()" class="button" matTooltip="Click to add a new post"
+        matTooltipPosition="right">
+        Add new post
+      </button>
+      <button mat-button class="button" matTooltip="back to home page" matTooltipPosition="right"
+        [routerLink]="['/']">Home</button>
+    </div>
     <div class="auth-block">
       <div class="login-user" [routerLink]="['/userPage']">
         <span class="material-icons">person</span>
         <span>{{loginUserName}}</span>
       </div>
-      <button mat-button class="button" matTooltip="Click to log out" matTooltipPosition="right" (click)="logOut()"[routerLink]="['/']">
+      <button mat-button class="button" matTooltip="Click to log out" matTooltipPosition="right" (click)="logOut()"
+        [routerLink]="['/']">
         <span class="material-icons">logout</span>
       </button>
     </div>
-
   </ng-template>
 </div>
 <hr>

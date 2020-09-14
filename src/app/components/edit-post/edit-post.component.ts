@@ -40,12 +40,13 @@ export class EditPostComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  openSnackBar() {
+  openSuccessSnackBar() {
     this._snackBar.openFromComponent(SuccessAddComponent, {
       duration: this.durationInSeconds * 1000,
       data: { data: this.data, message: this.action, checked: this.checked },
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
+      panelClass: ['success-snackbar']
     });
   }
 

@@ -17,8 +17,8 @@ export class AuthService {
 
   constructor(private http: HttpClient, private postService: PostsService) {}
 
-  addUser(user: UserInterface): Observable<UserInterface[]> {
-    return this.http.post<UserInterface[]>(`${this.registerUrl}`, user);
+  addUser(user: UserInterface): Observable<UserInterface> {
+    return this.http.post<UserInterface>(`${this.registerUrl}`, user);
   }
   login(data: any): Observable<any> {
     return this.http.post<any>(`${this.loginUrl}`, data);

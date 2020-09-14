@@ -8,12 +8,13 @@ import {
 } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription, of } from 'rxjs';
-import { switchMap, delay } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { PostsService } from '../../shared/services/posts.service';
 import { PostInterface } from '../../shared/interfaces/post.interface';
 import { SuccessAddComponent } from '../../components/snack-bar/success-add/success-add.component';
 import { AuthService } from '../../shared/services/auth.service';
 import { EditPostComponent } from '../edit-post/edit-post.component';
+import { UnsuccessComponent } from '../snack-bar/unsuccess/unsuccess.component';
 
 @Component({
   selector: 'app-posts',
@@ -70,35 +71,33 @@ export class PostsComponent implements OnInit, OnDestroy {
     );
     const postsStream$ = this.postServise
       .getPosts()
-      .pipe(delay(1000))
       .subscribe((data) => {
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         this.postServise.changeQueryParameter(data);
-        // this.authServise.changeIsLoadingQueryParameter(this.isLogin);
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       });
     this.subscription.add(postsStream$);
     this.subscription.add(stream$);
     this.subscription.add(isLoading$);
   }
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   deletePost(id): void {
     const postsStream$ = this.postServise.deletePost(id).subscribe((data) => {
-      this.openSnackBar(data);
+      this.openSuccessSnackBar(data);
       this.postServise.changeQueryParameter(data);
     });
     this.subscription.add(postsStream$);
   }
 
-  openSnackBar(data) {
+  openSuccessSnackBar(data) {
     this._snackBar.openFromComponent(SuccessAddComponent, {
-      duration: this.durationInSeconds * 1000,
+      duration: this.durationInSeconds * 1000000,
       data: { data: data, message: this.action },
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
+      panelClass: ['success-snackbar']
     });
   }
+
+
 
   openEditDialog(post): void {
     const dialogRef = this.dialog.open(EditPostComponent, {

@@ -28,6 +28,7 @@ import { RegisterComponent } from './components/register/register.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { UnsuccessComponent } from './components/snack-bar/unsuccess/unsuccess.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     RegisterComponent,
     UserPageComponent,
     NavBarComponent,
+    UnsuccessComponent,
   ],
   imports: [
     BrowserModule,

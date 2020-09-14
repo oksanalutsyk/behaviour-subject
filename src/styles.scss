@@ -56,13 +56,18 @@ a {
   }
 }
 
-.cdk-global-overlay-wrapper {
-  .mat-snack-bar-container {
-    color: slategray;
-    background: #cbebd3;
-    box-shadow: none;
-  }
+.success-snackbar {
+  color: slategray;
+  background: #cbebd3 !important;
+  box-shadow: none;
 }
+.unsuccess-snackbar {
+  color: slategray;
+  background: #e68585 !important;
+  box-shadow: none;
+}
+
+
 
 //spiner
 mat-spinner {
@@ -74,6 +79,7 @@ mat-spinner {
     height: 40px !important;
   }
 }
+
 .mat-progress-spinner circle,
 .mat-spinner circle {
   stroke: #f44336;
