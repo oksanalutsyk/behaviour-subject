@@ -62,16 +62,17 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
   getPosts(): void {
     const stream$ = this.postServise.query$.subscribe(
-      (item) => ((this.posts = item), console.log(item)),
+      (item) => ((this.posts = item)),
       (err) => console.log(err)
     );
     const isLoading$ = this.authServise.isLoadingQuery$.subscribe(
-      (query) => ((this.isLogin = query), console.log(query)),
+      (query) => ((this.isLogin = query)),
       (err) => console.log(err)
     );
     const postsStream$ = this.postServise
       .getPosts()
       .subscribe((data) => {
+        console.log(data)
         this.postServise.changeQueryParameter(data);
       });
     this.subscription.add(postsStream$);
@@ -82,8 +83,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   deletePost(id): void {
     const postsStream$ = this.postServise.deletePost(id).subscribe((data) => {
       this.openSuccessSnackBar(data);
-      this.postServise.changeQueryParameter(data);
-      console.log(data)
+      // this.postServise.changeQueryParameter(data);
     });
     this.subscription.add(postsStream$);
     this.getPosts()
@@ -91,7 +91,7 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   openSuccessSnackBar(data) {
     this._snackBar.openFromComponent(SuccessAddComponent, {
-      duration: this.durationInSeconds * 1000000,
+      duration: this.durationInSeconds * 1000,
       data: { data: data, message: this.action },
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
@@ -121,8 +121,9 @@ export class PostsComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((data) => {
-        console.log('update', data);
-        this.postServise.changeQueryParameter(data);
+      this.openSuccessSnackBar(data);
+      this.getPosts()
+        // this.postServise.changeQueryParameter(data);
       });
     this.subscription.add(postsStream$);
   }

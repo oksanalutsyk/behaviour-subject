@@ -8,7 +8,6 @@ const userTokenVerify = require('../middleware/user');
 
 
 //відслідкування url
-
 // posts
 router.get('/posts', async (req, res) => {
     const { post } = req.query;
@@ -30,7 +29,6 @@ router.get('/posts', async (req, res) => {
         res.status(400).send(err);
     }
 });
-
 router.get('/posts/:id', async (req, res) => {
     const id = req.params.id;
     try {
@@ -43,7 +41,6 @@ router.get('/posts/:id', async (req, res) => {
         res.status(400).send(err);
     }
 })
-
 router.post('/posts', async (req, res) => {
     const { title, body, image, checked } = req.body;
     try {
@@ -60,12 +57,11 @@ router.post('/posts', async (req, res) => {
         res.status(500).send(err);
     }
 })
-
 router.delete('/posts/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const response = await Post.findByIdAndDelete({ _id: id });
-        res.send({ response: response, message: `post "${response.title}" successfully deleted` });
+        res.send({ response: response, message: `post "${response.title}" successfully deleted !` });
 
         if (!response) {
             return res.status(404).send('Post does not exist!');
@@ -74,11 +70,10 @@ router.delete('/posts/:id', async (req, res) => {
         res.status(400).send(err);
     }
 })
-
 router.patch('/posts/update/:id', async (req, res) => {
     try {
         const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body)
-        res.status(200).send(updatedPost)
+        res.status(200).send({ updatedPost: updatedPost, message: `post "${updatedPost.title}" successfully edited !` })
         if (!updatedPost) {
             return res.status(404).send('Post does not update!');
         }
@@ -104,16 +99,14 @@ router.post('/auth', async (req, res) => {
             name: req.body.name,
             password: hash,
         });
-        console.log(req.body)
         await newUser.save();
-        res.status(200).send({ newUser: newUser, message: `user "${name}" successfully added` },
+        res.status(200).send({ newUser: newUser, message: `user "${name}" successfully added `},
         );
     } catch (err) {
         res.status(500).send(err)
     }
 
 })
-
 router.get('/auth', async (req, res) => {
     const { user } = req.query;
     let users;
@@ -134,7 +127,6 @@ router.get('/auth', async (req, res) => {
         res.status(400).send(err);
     }
 });
-
 router.post('/login', async (req, res) => {
     const { name } = req.body;
     try {
@@ -169,7 +161,6 @@ router.get('/auth/:id', userTokenVerify, async (req, res) => {
             return res.status(404).send('User does not exist!');
         }
         res.status(200).send(user);
-        console.log(user)
     } catch (err) {
         res.status(400).send(err);
     }

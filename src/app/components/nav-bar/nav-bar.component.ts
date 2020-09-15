@@ -70,11 +70,11 @@ export class NavBarComponent implements OnInit {
 
   getPosts(): void {
     const stream$ = this.postServise.query$.subscribe(
-      (item) => ((this.posts = item), console.log(item)),
+      (item) => ((this.posts = item)),
       (err) => console.log(err)
     );
     const isLoading$ = this.authServise.isLoadingQuery$.subscribe(
-      (query) => ((this.isLogin = query), console.log(query)),
+      (query) => ((this.isLogin = query)),
       (err) => console.log(err)
     );
     const postsStream$ = this.postServise.getPosts().subscribe((data) => {
@@ -127,7 +127,6 @@ export class NavBarComponent implements OnInit {
       .pipe(
         switchMap((data) => {
           if (data.title && data.body && data.image) {
-            console.log('add', data);
             return this.postServise.addNewPost(data);
           }
           return of([]);
@@ -166,7 +165,7 @@ export class NavBarComponent implements OnInit {
           this.openUnsuccessSnackBar(result);
         } else {
           console.log('TRUE', result);
-          // this.openSuccessSnackBar(result)
+          this.openSuccessSnackBar(result)
         }
       });
     this.subscription.add(postsStream$);
@@ -179,7 +178,6 @@ export class NavBarComponent implements OnInit {
       verticalPosition: this.verticalPosition,
       panelClass: ['unsuccess-snackbar'],
     });
-    console.log(data.message);
   }
   openSuccessSnackBar(data) {
     this._snackBar.openFromComponent(SuccessAddComponent, {

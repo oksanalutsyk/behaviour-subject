@@ -23,17 +23,17 @@ export class PostsService {
     return this.http.get<PostInterface[]>(`${this.url}/${id}`);
   }
   deletePost(id: string): Observable<PostInterface[]> {
-    return this.http.delete<PostInterface[]>(`${this.url}/${id}`)
+    return this.http.delete<PostInterface[]>(`${this.url}/${id}`);
   }
   updatePost(id: string, post: any): Observable<PostInterface[]> {
-    return this.http
-      .patch<PostInterface[]>(`${this.url}/update/${id}`, post).pipe(
-        switchMap(() => this.getPosts()),
-        catchError((err) => of(err))
-      );
+    return this.http.patch<PostInterface[]>(`${this.url}/update/${id}`, post);
+    // .pipe(
+    //   switchMap(() => this.getPosts()),
+    //   catchError((err) => of(err))
+    // );
   }
   addNewPost(post: PostInterface): Observable<PostInterface[]> {
-    return this.http.post<PostInterface[]>(`${this.url}`, post)
+    return this.http.post<PostInterface[]>(`${this.url}`, post);
     // .pipe(
     //   switchMap(() => this.getPosts()),
     //   catchError((err) => of(err))
