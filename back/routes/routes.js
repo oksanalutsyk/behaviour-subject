@@ -54,7 +54,7 @@ router.post('/posts', async (req, res) => {
             checked
         });
         await newPost.save();
-        res.status(200).send(newPost);
+        res.status(200).send({ newPost: newPost, message: `post "${title}" successfully added` });
 
     } catch (err) {
         res.status(500).send(err);
@@ -65,7 +65,7 @@ router.delete('/posts/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const response = await Post.findByIdAndDelete({ _id: id });
-        res.send(response);
+        res.send({ response: response, message: `post "${response.title}" successfully deleted` });
 
         if (!response) {
             return res.status(404).send('Post does not exist!');
@@ -96,7 +96,7 @@ router.post('/auth', async (req, res) => {
         if (checkedUser) {
             return res.json({
                 status: false,
-                message: 'user already exist',
+                message: `user "${name}" already exist`,
                 errorNumber: '403'
             })
         }
@@ -106,7 +106,7 @@ router.post('/auth', async (req, res) => {
         });
         console.log(req.body)
         await newUser.save();
-        res.status(200).send({ newUser: newUser, message: 'user successfully added' },
+        res.status(200).send({ newUser: newUser, message: `user "${name}" successfully added` },
         );
     } catch (err) {
         res.status(500).send(err)

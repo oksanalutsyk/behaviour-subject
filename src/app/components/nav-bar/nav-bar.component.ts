@@ -9,8 +9,14 @@ import { AddPostComponent } from '../add-post/add-post.component';
 import { of, Subscription } from 'rxjs';
 import { RegisterComponent } from '../register/register.component';
 import { UserInterface } from 'src/app/shared/interfaces/user.interface';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 import { UnsuccessComponent } from '../snack-bar/unsuccess/unsuccess.component';
+import { SuccessAddComponent } from '../snack-bar/success-add/success-add.component';
+import { PostInterface } from 'src/app/shared/interfaces/post.interface';
 
 @Component({
   selector: 'nav-bar',
@@ -18,6 +24,7 @@ import { UnsuccessComponent } from '../snack-bar/unsuccess/unsuccess.component';
   styleUrls: ['./nav-bar.component.scss'],
 })
 export class NavBarComponent implements OnInit {
+  posts: PostInterface[];
   title: string;
   body: string;
   checked: boolean;
@@ -61,6 +68,22 @@ export class NavBarComponent implements OnInit {
     }
   }
 
+  getPosts(): void {
+    const stream$ = this.postServise.query$.subscribe(
+      (item) => ((this.posts = item), console.log(item)),
+      (err) => console.log(err)
+    );
+    const isLoading$ = this.authServise.isLoadingQuery$.subscribe(
+      (query) => ((this.isLogin = query), console.log(query)),
+      (err) => console.log(err)
+    );
+    const postsStream$ = this.postServise.getPosts().subscribe((data) => {
+      this.postServise.changeQueryParameter(data);
+    });
+    this.subscription.add(postsStream$);
+    this.subscription.add(stream$);
+    this.subscription.add(isLoading$);
+  }
   openLoginDialog(): void {
     const dialogRef = this.dialog.open(LoginComponent, {
       width: '1000px',
@@ -111,7 +134,9 @@ export class NavBarComponent implements OnInit {
         })
       )
       .subscribe((data) => {
+        this.getPosts();
         console.log('update', data);
+        this.openSuccessSnackBar(data);
         this.postServise.changeQueryParameter(data);
       });
     this.subscription.add(postsStream$);
@@ -138,9 +163,10 @@ export class NavBarComponent implements OnInit {
       .subscribe((result) => {
         if (result.hasOwnProperty('status')) {
           console.log('FALSE', result);
-          this.openUnsuccessSnackBar(result)
+          this.openUnsuccessSnackBar(result);
         } else {
           console.log('TRUE', result);
+          // this.openSuccessSnackBar(result)
         }
       });
     this.subscription.add(postsStream$);
@@ -151,9 +177,18 @@ export class NavBarComponent implements OnInit {
       data: { data: data, message: this.action },
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
-      panelClass: ['unsuccess-snackbar']
+      panelClass: ['unsuccess-snackbar'],
     });
-    console.log(data.message)
+    console.log(data.message);
+  }
+  openSuccessSnackBar(data) {
+    this._snackBar.openFromComponent(SuccessAddComponent, {
+      duration: this.durationInSeconds * 1000,
+      data: { data: data, message: this.action },
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      panelClass: ['success-snackbar'],
+    });
   }
   logOut(): void {
     this.isLogin = false;

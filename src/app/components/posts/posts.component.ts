@@ -83,8 +83,10 @@ export class PostsComponent implements OnInit, OnDestroy {
     const postsStream$ = this.postServise.deletePost(id).subscribe((data) => {
       this.openSuccessSnackBar(data);
       this.postServise.changeQueryParameter(data);
+      console.log(data)
     });
     this.subscription.add(postsStream$);
+    this.getPosts()
   }
 
   openSuccessSnackBar(data) {
@@ -96,8 +98,6 @@ export class PostsComponent implements OnInit, OnDestroy {
       panelClass: ['success-snackbar']
     });
   }
-
-
 
   openEditDialog(post): void {
     const dialogRef = this.dialog.open(EditPostComponent, {

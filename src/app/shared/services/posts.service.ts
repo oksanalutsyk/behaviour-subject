@@ -23,10 +23,7 @@ export class PostsService {
     return this.http.get<PostInterface[]>(`${this.url}/${id}`);
   }
   deletePost(id: string): Observable<PostInterface[]> {
-    return this.http.delete<PostInterface[]>(`${this.url}/${id}`).pipe(
-      switchMap(() => this.getPosts()),
-      catchError((err) => of(err))
-    );
+    return this.http.delete<PostInterface[]>(`${this.url}/${id}`)
   }
   updatePost(id: string, post: any): Observable<PostInterface[]> {
     return this.http
@@ -36,10 +33,11 @@ export class PostsService {
       );
   }
   addNewPost(post: PostInterface): Observable<PostInterface[]> {
-    return this.http.post<PostInterface[]>(`${this.url}`, post).pipe(
-      switchMap(() => this.getPosts()),
-      catchError((err) => of(err))
-    );
+    return this.http.post<PostInterface[]>(`${this.url}`, post)
+    // .pipe(
+    //   switchMap(() => this.getPosts()),
+    //   catchError((err) => of(err))
+    // );
   }
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   changeQueryParameter(query: any) {
