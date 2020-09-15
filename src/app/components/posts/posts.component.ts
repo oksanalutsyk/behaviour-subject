@@ -72,7 +72,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     const postsStream$ = this.postServise
       .getPosts()
       .subscribe((data) => {
-        console.log(data)
+        // console.log(data)
         this.postServise.changeQueryParameter(data);
       });
     this.subscription.add(postsStream$);
@@ -116,10 +116,10 @@ export class PostsComponent implements OnInit, OnDestroy {
       .afterClosed()
       .pipe(
         switchMap((data) => {
-          if (data.title && data.body && data.image) {
+          if ( data && data.title && data.body && data.image) {
             return this.postServise.updatePost(post._id, data);
           }
-          return of([]);
+          return of(this.posts);
         })
       )
       .subscribe((data:any) => {

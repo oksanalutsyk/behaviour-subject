@@ -125,17 +125,21 @@ export class NavBarComponent implements OnInit {
       .afterClosed()
       .pipe(
         switchMap((data) => {
-          if (data.title && data.body && data.image) {
-            return this.postServise.addNewPost(data);
-          }
-          return of([]);
+            if (data !==undefined && data.title && data.body && data.image) {
+              console.log(data)
+              return this.postServise.addNewPost(data);
+            }
+          return of(this.posts);
         })
       )
       .subscribe((data: any) => {
-        if (data.message) {
-          this.openSuccessSnackBar(data);
+        if(data !==undefined){
+          if ( data.message) {
+            this.openSuccessSnackBar(data);
+          }
+          this.postServise.changeQueryParameter(data);
         }
-        this.postServise.changeQueryParameter(data);
+
       });
     this.subscription.add(postsStream$);
   }
