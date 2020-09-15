@@ -81,12 +81,14 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
   deletePost(id): void {
-    const postsStream$ = this.postServise.deletePost(id).subscribe((data) => {
-      this.openSuccessSnackBar(data);
-      // this.postServise.changeQueryParameter(data);
+    const postsStream$ = this.postServise.deletePost(id).subscribe((data:any) => {
+      console.log(data)
+      if(data.message){
+        this.openSuccessSnackBar(data);
+      }
+      this.postServise.changeQueryParameter(data);
     });
     this.subscription.add(postsStream$);
-    this.getPosts()
   }
 
   openSuccessSnackBar(data) {
@@ -120,10 +122,11 @@ export class PostsComponent implements OnInit, OnDestroy {
           return of([]);
         })
       )
-      .subscribe((data) => {
-      this.openSuccessSnackBar(data);
-      this.getPosts()
-        // this.postServise.changeQueryParameter(data);
+      .subscribe((data:any) => {
+        if(data.message){
+          this.openSuccessSnackBar(data);
+        }
+        this.postServise.changeQueryParameter(data);
       });
     this.subscription.add(postsStream$);
   }

@@ -51,7 +51,7 @@ router.post('/posts', async (req, res) => {
             checked
         });
         await newPost.save();
-        res.status(200).send({ newPost: newPost, message: `post "${title}" successfully added` });
+        res.status(200).send({ newPost: newPost, message: `post "${title}" successfully added !` });
 
     } catch (err) {
         res.status(500).send(err);
@@ -90,7 +90,7 @@ router.post('/auth', async (req, res) => {
         const checkedUser = await User.findOne({ name })
         if (checkedUser) {
             return res.json({
-                status: false,
+                isExist: true,
                 message: `user "${name}" already exist`,
                 errorNumber: '403'
             })
@@ -130,17 +130,17 @@ router.get('/auth', async (req, res) => {
 router.post('/login', async (req, res) => {
     const { name } = req.body;
     try {
-        const user = await User.findOne({ name })
+        const user = await User.findOne({ name });
         if (!user) {
             // return res.status(401).json({
             return res.json({
-                message: 'Auth failed'
+                message: 'Auth failed, no user'
             })
         }
         const result = await bcrypt.compare(req.body.password, user.password);
         if (!result) {
             return res.status(401).json({
-                message: 'Auth failed'
+                message: 'Auth failed, bcrypt'
             })
         }
         const token = jwt.sign({ name: user.name, userId: user._id }, 'secret_this_should_be_longer', { expiresIn: "1h" });

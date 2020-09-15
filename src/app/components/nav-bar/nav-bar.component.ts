@@ -70,11 +70,11 @@ export class NavBarComponent implements OnInit {
 
   getPosts(): void {
     const stream$ = this.postServise.query$.subscribe(
-      (item) => ((this.posts = item)),
+      (item) => (this.posts = item),
       (err) => console.log(err)
     );
     const isLoading$ = this.authServise.isLoadingQuery$.subscribe(
-      (query) => ((this.isLogin = query)),
+      (query) => (this.isLogin = query),
       (err) => console.log(err)
     );
     const postsStream$ = this.postServise.getPosts().subscribe((data) => {
@@ -110,7 +110,6 @@ export class NavBarComponent implements OnInit {
       }
     });
   }
-
   openAddDialog(): void {
     const dialogRef = this.dialog.open(AddPostComponent, {
       width: '1000px',
@@ -132,10 +131,10 @@ export class NavBarComponent implements OnInit {
           return of([]);
         })
       )
-      .subscribe((data) => {
-        this.getPosts();
-        console.log('update', data);
-        this.openSuccessSnackBar(data);
+      .subscribe((data: any) => {
+        if (data.message) {
+          this.openSuccessSnackBar(data);
+        }
         this.postServise.changeQueryParameter(data);
       });
     this.subscription.add(postsStream$);
@@ -152,7 +151,6 @@ export class NavBarComponent implements OnInit {
         switchMap((user) => {
           if (user) {
             if (user.name && user.password) {
-              console.log('add', user);
               return this.authServise.addUser(user);
             }
           }
@@ -160,12 +158,10 @@ export class NavBarComponent implements OnInit {
         })
       )
       .subscribe((result) => {
-        if (result.hasOwnProperty('status')) {
-          console.log('FALSE', result);
+        if (result.hasOwnProperty('isExist')) {
           this.openUnsuccessSnackBar(result);
         } else {
-          console.log('TRUE', result);
-          this.openSuccessSnackBar(result)
+          this.openSuccessSnackBar(result);
         }
       });
     this.subscription.add(postsStream$);
