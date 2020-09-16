@@ -1,12 +1,11 @@
 <!-- <mat-spinner *ngIf="isLoading"></mat-spinner> -->
-<mat-form-field class="example-form-field">
-  <mat-label>Write something...</mat-label>
-  <input matInput type="text" [(ngModel)]="searchTerm" name="searchTerm">
-  <button mat-button matSuffix mat-icon-button aria-label="Clear">
-  </button>
-</mat-form-field>
-
 <div *ngIf="!isLoading && isLogin">
+  <mat-form-field class="example-form-field">
+    <mat-label>Write something...</mat-label>
+    <input matInput type="text" [(ngModel)]="searchTerm" name="searchTerm">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear">
+    </button>
+  </mat-form-field>
   <h3>Posts ({{ posts.length }})</h3>
   <div class="posts">
     <div class="post" *ngFor="

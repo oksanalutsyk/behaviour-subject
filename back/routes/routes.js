@@ -6,16 +6,16 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const userTokenVerify = require('../middleware/user');
 
-
 //відслідкування url
 // posts
+
 router.get('/posts', async (req, res) => {
-    const { post } = req.query;
-    let posts;
+    const title = req.query.title;
+    const condition = title ? { title: { $regex: new RegExp(title), $options: "i"}} : {};
     try {
         // check if object query is not empty
         if (!(Object.entries(req.query).length === 0 && req.query.constructor === Object)) {
-            posts = await Post.find({ post: { $in: post.split(',') } });
+            posts = await Post.find(condition);
         } else {
             posts = await Post.find();
         }
@@ -29,6 +29,27 @@ router.get('/posts', async (req, res) => {
         res.status(400).send(err);
     }
 });
+
+// router.get('/posts', async (req, res) => {
+//     const { post } = req.query;
+//     let posts;
+//     try {
+//         // check if object query is not empty
+//         if (!(Object.entries(req.query).length === 0 && req.query.constructor === Object)) {
+//             posts = await Post.find({ post: { $in: post.split(',') } });
+//         } else {
+//             posts = await Post.find();
+//         }
+
+//         if (!posts || posts.length === 0) {
+//             throw { message: 'Post is not found' };
+//         }
+//         res.status(200).send(posts);
+
+//     } catch (err) {
+//         res.status(400).send(err);
+//     }
+// });
 router.get('/posts/:id', async (req, res) => {
     const id = req.params.id;
     try {
@@ -100,7 +121,7 @@ router.post('/auth', async (req, res) => {
             password: hash,
         });
         await newUser.save();
-        res.status(200).send({ newUser: newUser, message: `user "${name}" successfully added `},
+        res.status(200).send({ newUser: newUser, message: `user "${name}" successfully added ` },
         );
     } catch (err) {
         res.status(500).send(err)
@@ -153,7 +174,7 @@ router.post('/login', async (req, res) => {
     }
 })
 router.get('/auth/:id', userTokenVerify, async (req, res) => {
-    console.log(req.param)
+    // console.log(req.param)
     const id = req.params.id;
     try {
         const user = await User.findById(id);
