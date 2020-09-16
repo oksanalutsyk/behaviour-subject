@@ -29,6 +29,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { UnsuccessComponent } from './components/snack-bar/unsuccess/unsuccess.component';
+import { PostSearchPipe } from './shared/pipes/post-search.pipe';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { UnsuccessComponent } from './components/snack-bar/unsuccess/unsuccess.c
     UserPageComponent,
     NavBarComponent,
     UnsuccessComponent,
+    PostSearchPipe,
   ],
   imports: [
     BrowserModule,

@@ -41,6 +41,9 @@ export class PostsComponent implements OnInit, OnDestroy {
   name: string;
   password: string;
 
+  searchTerm = '';
+
+
   private subscription: Subscription;
 
   constructor(

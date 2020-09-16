@@ -1,10 +1,17 @@
-<mat-spinner *ngIf="isLoading"></mat-spinner>
+<!-- <mat-spinner *ngIf="isLoading"></mat-spinner> -->
+<mat-form-field class="example-form-field">
+  <mat-label>Write something...</mat-label>
+  <input matInput type="text" [(ngModel)]="searchTerm" name="searchTerm">
+  <button mat-button matSuffix mat-icon-button aria-label="Clear">
+  </button>
+</mat-form-field>
+
 <div *ngIf="!isLoading && isLogin">
   <h3>Posts ({{ posts.length }})</h3>
   <div class="posts">
     <div class="post" *ngFor="
-        let post of posts | paginate: { itemsPerPage: 6, currentPage: page }
-      " id="{{ post._id }}">
+        let post of posts | paginate: { itemsPerPage: 6, currentPage: page } | postSearch:searchTerm"
+      id="{{ post._id }}">
       <img src="{{ post.image }}" alt="" />
       <span class="title">{{ post.title }}</span>
       <span class="body">{{ post.body }}</span>

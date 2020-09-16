@@ -43,7 +43,6 @@ export class NavBarComponent implements OnInit {
   action = 'added';
 
   private subscription: Subscription;
-
   constructor(
     private authServise: AuthService,
     private postServise: PostsService,
@@ -125,21 +124,20 @@ export class NavBarComponent implements OnInit {
       .afterClosed()
       .pipe(
         switchMap((data) => {
-            if (data !==undefined && data.title && data.body && data.image) {
-              console.log(data)
-              return this.postServise.addNewPost(data);
-            }
+          if (data !== undefined && data.title && data.body && data.image) {
+            console.log(data);
+            return this.postServise.addNewPost(data);
+          }
           return of(this.posts);
         })
       )
       .subscribe((data: any) => {
-        if(data !==undefined){
-          if ( data.message) {
+        if (data !== undefined) {
+          if (data.message) {
             this.openSuccessSnackBar(data);
           }
           this.postServise.changeQueryParameter(data);
         }
-
       });
     this.subscription.add(postsStream$);
   }
